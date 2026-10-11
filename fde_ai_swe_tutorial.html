@@ -132,6 +132,9 @@
         <button onclick="switchTab('tech')" id="btn-tech" class="tab-btn flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
           💻 <span id="tab-title-tech">6. Architecture & Code Blueprints</span>
         </button>
+        <button onclick="switchTab('lab')" id="btn-lab" class="tab-btn flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
+          🧪 <span id="tab-title-lab">7. Hands-on Enterprise Lab</span>
+        </button>
       </nav>
     </header>
 
@@ -346,6 +349,233 @@
       </div>
     </section>
 
+    <!-- TAB 7: Hands-on Enterprise Exercise Lab Playground -->
+    <section id="tab-lab" class="space-y-6 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 shadow-sm space-y-6">
+        <!-- Lab Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 mb-2">
+              <span>🧪</span> <span id="lab-badge">Interactive Enterprise Lab</span>
+            </div>
+            <h3 id="lab-header-title" class="text-xl font-bold">Hands-on Enterprise Engineering Lab & Interactive Playground</h3>
+            <p id="lab-header-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)] mt-1 max-w-3xl">
+              Execute live interactive simulations of the 4 FDE core pillars directly in your browser, or clone the runnable Python enterprise test suite to practice on your local workstation.
+            </p>
+          </div>
+          <!-- Terminal Quick Run Link Pill -->
+          <div class="flex items-center gap-2">
+            <a href="https://github.com/SinLiongToo/fde-ai-swe-masterclass/tree/main/exercises/fde_enterprise_lab" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90 transition">
+              <span>📂</span> <span id="lab-repo-link">View Python Lab Source Code</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Milestone Selector Pills -->
+        <div class="flex gap-2 overflow-x-auto no-scrollbar scroll-touch pb-1 sm:pb-0 sm:flex-wrap" id="labMilestoneNav">
+          <button onclick="switchLabMilestone(1)" id="lab-tab-1" class="lab-pill px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-transparent bg-[var(--primary)] text-[var(--primary-foreground)]">
+            1. Pydantic v2 Schema Gate
+          </button>
+          <button onclick="switchLabMilestone(2)" id="lab-tab-2" class="lab-pill px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[var(--accent)]">
+            2. 2-Stage Hybrid Search vs Dense
+          </button>
+          <button onclick="switchLabMilestone(3)" id="lab-tab-3" class="lab-pill px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[var(--accent)]">
+            3. State Machine & HITL Interrupt
+          </button>
+          <button onclick="switchLabMilestone(4)" id="lab-tab-4" class="lab-pill px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[var(--accent)]">
+            4. CI/CD Statistical Eval SLA Gate
+          </button>
+        </div>
+
+        <!-- Milestone 1: Pydantic v2 Contract Validator -->
+        <div id="lab-panel-1" class="lab-panel space-y-4">
+          <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--accent)] space-y-3">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+              <div>
+                <h4 id="m1-title" class="text-sm font-bold text-[var(--foreground)]">Milestone 1: Pydantic v2 Spec Contracts & Anti-Lazy Gate</h4>
+                <p id="m1-desc" class="text-xs text-[var(--muted-foreground)]">Test runtime validation rules, regex constraints, and the Anti-Hallucination Gate intercepting lazy tokens like 'TBD' or 'Contact admin'.</p>
+              </div>
+              <div class="flex gap-1.5 flex-wrap">
+                <button onclick="loadValidatorPreset('valid')" class="px-2.5 py-1 text-xs rounded border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] text-[var(--foreground)]">Preset: Valid</button>
+                <button onclick="loadValidatorPreset('lazy')" class="px-2.5 py-1 text-xs rounded border border-amber-500/30 bg-amber-500/10 text-amber-500 hover:bg-amber-500/20">Preset: Lazy Token (TBD)</button>
+                <button onclick="loadValidatorPreset('bad_id')" class="px-2.5 py-1 text-xs rounded border border-red-500/30 bg-red-500/10 text-red-500 hover:bg-red-500/20">Preset: Bad Regex ID</button>
+              </div>
+            </div>
+
+            <!-- JSON Input Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-2">
+              <div class="space-y-2">
+                <label id="m1-input-label" class="text-xs font-bold text-[var(--muted-foreground)]">Input JSON Payload (Editable):</label>
+                <textarea id="valInputJson" rows="10" class="w-full font-mono text-xs p-3 rounded-lg border border-[var(--border)] bg-[#090e1a] text-emerald-400 focus:outline-none focus:ring-1 focus:ring-sky-500"></textarea>
+                <button onclick="runLabValidator()" id="m1-run-btn" class="w-full py-2 rounded-lg text-xs font-bold bg-sky-500 hover:bg-sky-600 text-white transition flex items-center justify-center gap-1.5 shadow-sm">
+                  <span>⚡</span> <span id="m1-run-btn-text">Execute Pydantic v2 Schema Validation</span>
+                </button>
+              </div>
+              <div class="space-y-2">
+                <label id="m1-output-label" class="text-xs font-bold text-[var(--muted-foreground)]">Validation Traceback & Telemetry:</label>
+                <div id="valResultBox" class="h-[240px] font-mono text-xs p-3 rounded-lg border border-[var(--border)] bg-[#090e1a] text-slate-200 overflow-y-auto leading-relaxed">
+                  <!-- Output rendered here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 2: 2-Stage Hybrid Search vs Dense -->
+        <div id="lab-panel-2" class="lab-panel space-y-4 hidden">
+          <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--accent)] space-y-3">
+            <h4 id="m2-title" class="text-sm font-bold text-[var(--foreground)]">Milestone 2: 2-Stage Hybrid Search vs Dense-Only Search Comparator</h4>
+            <p id="m2-desc" class="text-xs text-[var(--muted-foreground)]">See why Dense Vector search misses exact technical IDs (e.g. 'lock_timeout', 'Article 44') while BM25 sparse lexical search provides exact precision, fused via Reciprocal Rank Fusion (RRF k=60).</p>
+            
+            <div class="flex gap-2 flex-wrap items-center pt-1">
+              <span id="m2-presets-label" class="text-xs font-bold text-[var(--muted-foreground)]">Try Queries:</span>
+              <button onclick="runLabSearch('slowness in payment service')" class="px-2.5 py-1 text-xs rounded border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] text-[var(--foreground)]">1. "slowness in payment service" (Semantic)</button>
+              <button onclick="runLabSearch('lock_timeout postgres ddl')" class="px-2.5 py-1 text-xs rounded border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] text-[var(--foreground)]">2. "lock_timeout postgres ddl" (Exact ID)</button>
+              <button onclick="runLabSearch('GDPR Article 44 PII Frankfurt')" class="px-2.5 py-1 text-xs rounded border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] text-[var(--foreground)]">3. "GDPR Article 44 PII Frankfurt" (Hybrid)</button>
+            </div>
+
+            <!-- Search Results Display Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2" id="searchResultsGrid">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 3: Cyclical State Machine & HITL Interrupt -->
+        <div id="lab-panel-3" class="lab-panel space-y-4 hidden">
+          <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--accent)] space-y-3">
+            <h4 id="m3-title" class="text-sm font-bold text-[var(--foreground)]">Milestone 3: Cyclical State Machine DAG & Human-in-the-Loop (HITL) Safety Gate</h4>
+            <p id="m3-desc" class="text-xs text-[var(--muted-foreground)]">Simulate state transitions. Watch how a read-only audit executes automatically, while destructive operations (DROP TABLE) pause execution and demand a dual-authorization token.</p>
+
+            <div class="flex gap-2 flex-wrap pt-1">
+              <button onclick="initLabAgent('safe')" id="btnAgentSafe" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 transition">
+                ▶ Scenario A: Read-Only Audit (Safe Flow)
+              </button>
+              <button onclick="initLabAgent('danger')" id="btnAgentDanger" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20 transition">
+                ⚠️ Scenario B: Destructive SQL (Triggers HITL Gate)
+              </button>
+            </div>
+
+            <!-- DAG State Visualization -->
+            <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)] space-y-3">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-[var(--muted-foreground)]">CURRENT DAG STATE:</span>
+                  <span id="agentStateBadge" class="text-xs font-extrabold px-2.5 py-0.5 rounded bg-sky-500/10 text-sky-500 font-mono">INIT</span>
+                </div>
+                <span id="agentStepCounter" class="text-xs font-mono text-[var(--muted-foreground)]">Step: 0 / 6</span>
+              </div>
+
+              <!-- State Timeline Flow -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-semibold" id="agentTimeline">
+                <div id="node-plan" class="p-2 rounded border border-[var(--border)] bg-[var(--accent)] text-[var(--muted-foreground)]">1. PLANNER</div>
+                <div id="node-retrieval" class="p-2 rounded border border-[var(--border)] bg-[var(--accent)] text-[var(--muted-foreground)]">2. HYBRID RAG</div>
+                <div id="node-security" class="p-2 rounded border border-[var(--border)] bg-[var(--accent)] text-[var(--muted-foreground)]">3. SECURITY GUARD</div>
+                <div id="node-execute" class="p-2 rounded border border-[var(--border)] bg-[var(--accent)] text-[var(--muted-foreground)]">4. EXECUTE & EMIT</div>
+              </div>
+
+              <!-- HITL Modal Box (Visible when paused) -->
+              <div id="hitlInterruptionBox" class="p-3.5 rounded-lg border border-amber-500/30 bg-amber-500/10 space-y-2.5 hidden">
+                <div class="flex items-center gap-2 text-amber-500 font-bold text-xs">
+                  <span>🚨</span> <span id="hitl-alert-title">HITL GATE INTERRUPT: Destructive SQL Mutation Detected!</span>
+                </div>
+                <p id="hitl-alert-desc" class="text-xs text-[var(--foreground)] leading-relaxed">
+                  Agent proposed: <code class="font-mono text-amber-400 bg-[#090e1a] px-1.5 py-0.5 rounded">DROP TABLE customer_financial_ledger_2023 CASCADE;</code>. Execution suspended. Enter SRE dual-authorization token to resume:
+                </p>
+                <div class="flex flex-col sm:flex-row gap-2">
+                  <input type="text" id="hitlTokenInput" value="AUTH-SEC-9988-ENTERPRISE" class="font-mono text-xs px-3 py-1.5 rounded border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] flex-grow focus:outline-none">
+                  <button onclick="resolveLabHITL(true)" class="px-3 py-1.5 rounded text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white transition">✔ Authorize & Resume</button>
+                  <button onclick="resolveLabHITL(false)" class="px-3 py-1.5 rounded text-xs font-bold bg-red-500 hover:bg-red-600 text-white transition">✖ Deny & Abort</button>
+                </div>
+              </div>
+
+              <!-- Audit Trail Log -->
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-[var(--muted-foreground)]">Execution Audit Trail:</span>
+                <div id="agentAuditLogs" class="h-32 font-mono text-[11px] p-2.5 rounded border border-[var(--border)] bg-[#090e1a] text-slate-300 overflow-y-auto space-y-1 leading-snug">
+                  <div class="text-slate-500">&gt; Ready. Select a scenario above to start state machine.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone 4: CI/CD Statistical Eval SLA Gate -->
+        <div id="lab-panel-4" class="lab-panel space-y-4 hidden">
+          <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--accent)] space-y-3">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+              <div>
+                <h4 id="m4-title" class="text-sm font-bold text-[var(--foreground)]">Milestone 4: Continuous CI/CD Automated Evaluation Suite (Pytest)</h4>
+                <p id="m4-desc" class="text-xs text-[var(--muted-foreground)]">Run statistical regression gates in real-time, asserting strict SLAs on Recall (&gt;= 88%), Faithfulness (&gt;= 90%), and P99 Latency (&lt; 2500ms).</p>
+              </div>
+              <button onclick="runLabCICDGate()" id="btnRunCICD" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-sky-500 hover:bg-sky-600 text-white transition flex items-center gap-1.5 shadow-sm">
+                <span>▶</span> <span id="m4-run-btn">Run Pytest CI/CD Regression Suite</span>
+              </button>
+            </div>
+
+            <!-- Benchmark Results Table -->
+            <div class="overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--card)]">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="border-b border-[var(--border)] bg-[var(--accent)] text-[var(--muted-foreground)]">
+                    <th class="py-2.5 px-3 font-semibold">Evaluation Metric</th>
+                    <th class="py-2.5 px-3 font-semibold">Measured Value</th>
+                    <th class="py-2.5 px-3 font-semibold">Required CI/CD SLA</th>
+                    <th class="py-2.5 px-3 font-semibold">Gate Status</th>
+                  </tr>
+                </thead>
+                <tbody id="cicdTableBody">
+                  <tr class="border-b border-[var(--border)]">
+                    <td class="py-2.5 px-3 font-medium text-[var(--foreground)]">Context Recall Rate</td>
+                    <td id="m4-val-recall" class="py-2.5 px-3 font-mono text-[var(--muted-foreground)]">—</td>
+                    <td class="py-2.5 px-3 font-mono text-amber-500">&gt;= 88.0%</td>
+                    <td id="m4-status-recall" class="py-2.5 px-3 font-bold text-[var(--muted-foreground)]">WAITING</td>
+                  </tr>
+                  <tr class="border-b border-[var(--border)]">
+                    <td class="py-2.5 px-3 font-medium text-[var(--foreground)]">Faithfulness Score (Anti-Hallucination)</td>
+                    <td id="m4-val-faith" class="py-2.5 px-3 font-mono text-[var(--muted-foreground)]">—</td>
+                    <td class="py-2.5 px-3 font-mono text-amber-500">&gt;= 90.0%</td>
+                    <td id="m4-status-faith" class="py-2.5 px-3 font-bold text-[var(--muted-foreground)]">WAITING</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-medium text-[var(--foreground)]">Average Retrieval Latency</td>
+                    <td id="m4-val-lat" class="py-2.5 px-3 font-mono text-[var(--muted-foreground)]">—</td>
+                    <td class="py-2.5 px-3 font-mono text-amber-500">&lt; 2500 ms</td>
+                    <td id="m4-status-lat" class="py-2.5 px-3 font-bold text-[var(--muted-foreground)]">WAITING</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Terminal Output Emulation -->
+            <div id="cicdTerminalOutput" class="p-3 rounded-lg border border-[var(--border)] bg-[#090e1a] font-mono text-xs text-slate-300 space-y-1 h-28 overflow-y-auto">
+              <div class="text-slate-500">&gt; Click 'Run Pytest CI/CD Regression Suite' to execute test runner...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Quickstart Card -->
+        <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-[var(--foreground)] flex items-center gap-1.5">
+              <span>💻</span> <span id="lab-local-title">Run On Your Local Machine (Zero Third-Party API Key Required)</span>
+            </span>
+            <span class="text-[11px] font-mono text-sky-500 bg-sky-500/10 px-2 py-0.5 rounded">Python 3.11+ / Pydantic v2 / Pytest</span>
+          </div>
+          <div class="font-mono text-xs p-3 rounded-lg bg-[#090e1a] text-emerald-400 overflow-x-auto leading-relaxed border border-[var(--border)]">
+            # 1. Clone repository &amp; install dependencies<br>
+            git clone https://github.com/SinLiongToo/fde-ai-swe-masterclass.git<br>
+            cd fde-ai-swe-masterclass<br>
+            pip install pydantic pytest rich<br><br>
+            # 2. Run Interactive Terminal Exercise Runner<br>
+            python -m exercises.fde_enterprise_lab.main<br><br>
+            # 3. Run Automated CI/CD Regression Test Suite<br>
+            python -m pytest exercises/fde_enterprise_lab/test_eval_gate.py -v
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="text-center text-xs text-[var(--muted-foreground)] pt-4 pb-2 border-t border-[var(--border)]">
       <span id="footerText">Built for Forward Deployed Engineers & Modern AI Practitioners • DeepMind Antigravity Edition</span>
@@ -377,7 +607,8 @@
           roadmap: "3. Certifications & Lessons",
           playbook: "4. 5-Stage Production Playbook",
           assessment: "5. FDE Readiness Diagnostic",
-          tech: "6. Production Architecture & Code"
+          tech: "6. Production Architecture & Code",
+          lab: "7. Hands-on Enterprise Lab"
         },
         card2TechBtn: "Deep Dive: Production Code Blueprints →",
         card1: {
@@ -816,6 +1047,42 @@ if __name__ == "__main__":
             }
           ]
         },
+        lab: {
+          badge: "Interactive Enterprise Lab",
+          title: "Hands-on Enterprise Engineering Lab & Interactive Playground",
+          desc: "Execute live interactive simulations of the 4 FDE core pillars directly in your browser, or clone the runnable Python enterprise test suite to practice on your local workstation.",
+          repoLink: "View Python Lab Source Code",
+          pills: [
+            "1. Pydantic v2 Schema Gate",
+            "2. 2-Stage Hybrid Search vs Dense",
+            "3. State Machine & HITL Interrupt",
+            "4. CI/CD Statistical Eval SLA Gate"
+          ],
+          m1: {
+            title: "Milestone 1: Pydantic v2 Spec Contracts & Anti-Lazy Gate",
+            desc: "Test runtime validation rules, regex constraints, and the Anti-Hallucination Gate intercepting lazy tokens like 'TBD' or 'Contact admin'.",
+            inputLabel: "Input JSON Payload (Editable):",
+            outputLabel: "Validation Traceback & Telemetry:",
+            runBtn: "Execute Pydantic v2 Schema Validation"
+          },
+          m2: {
+            title: "Milestone 2: 2-Stage Hybrid Search vs Dense-Only Search Comparator",
+            desc: "See why Dense Vector search misses exact technical IDs (e.g. 'lock_timeout', 'Article 44') while BM25 sparse lexical search provides exact precision, fused via Reciprocal Rank Fusion (RRF k=60).",
+            presetsLabel: "Try Queries:"
+          },
+          m3: {
+            title: "Milestone 3: Cyclical State Machine DAG & Human-in-the-Loop (HITL) Safety Gate",
+            desc: "Simulate state transitions. Watch how a read-only audit executes automatically, while destructive operations (DROP TABLE) pause execution and demand a dual-authorization token.",
+            alertTitle: "HITL GATE INTERRUPT: Destructive SQL Mutation Detected!",
+            alertDesc: "Agent proposed: DROP TABLE customer_financial_ledger_2023 CASCADE;. Execution suspended. Enter SRE dual-authorization token to resume:"
+          },
+          m4: {
+            title: "Milestone 4: Continuous CI/CD Automated Evaluation Suite (Pytest)",
+            desc: "Run statistical regression gates in real-time, asserting strict SLAs on Recall (>= 88%), Faithfulness (>= 90%), and P99 Latency (< 2500ms).",
+            runBtn: "Run Pytest CI/CD Regression Suite"
+          },
+          localTitle: "Run On Your Local Machine (Zero Third-Party API Key Required)"
+        },
         footer: "Built for Forward Deployed Engineers & Modern AI Practitioners • DeepMind Antigravity Edition"
       },
       zh: {
@@ -836,7 +1103,8 @@ if __name__ == "__main__":
           roadmap: "3. 權威認證與學習路徑",
           playbook: "4. 五階段生產交付手冊",
           assessment: "5. FDE 就緒度能力評估",
-          tech: "6. 生產級架構與代碼深度拆解"
+          tech: "6. 生產級架構與代碼深度拆解",
+          lab: "7. 企業實戰演練實驗室"
         },
         card2TechBtn: "⚡ 查看第 6 模組：生產級架構與代碼深度拆解 →",
         card1: {
@@ -1275,6 +1543,42 @@ if __name__ == "__main__":
             }
           ]
         },
+        lab: {
+          badge: "企業實戰演練實驗室",
+          title: "FDE 前線工程師企業級實戰動手演練實驗室",
+          desc: "直接在瀏覽器中即時體驗 FDE 四大核心支柱的互動模擬，或將完整的 Python 企業測試套件複製到本地端動手演練實作。",
+          repoLink: "查看 Python 實驗室原始碼",
+          pills: [
+            "1. Pydantic v2 規格契約閘門",
+            "2. 兩階段混合檢索 vs 純向量對比",
+            "3. 狀態圖 Agent 與 HITL 人工中斷",
+            "4. CI/CD 統計評測 SLA 驗收"
+          ],
+          m1: {
+            title: "里程碑 1：Pydantic v2 規格契約與防懶惰驗證器",
+            desc: "測試執行期驗證規則、正則約束與防幻覺機制，自動攔截 'TBD'、'待確認'、'聯絡管理員' 等敷衍性輸出。",
+            inputLabel: "輸入 JSON 負載（可即時編輯）：",
+            outputLabel: "驗證回溯與遙測日誌：",
+            runBtn: "執行 Pydantic v2 結構規格驗證"
+          },
+          m2: {
+            title: "里程碑 2：兩階段混合檢索 vs 純向量搜尋效果對比",
+            desc: "直觀體驗為何純向量搜尋容易遺漏特定代號（如 'lock_timeout'、'Article 44'），而 BM25 全文詞彙搜尋能精確鎖定，並透過互惠排名融合 (RRF k=60) 完美整合語義與關鍵字。",
+            presetsLabel: "測試查詢語句："
+          },
+          m3: {
+            title: "里程碑 3：循環狀態圖 Agent 與 Human-in-the-Loop (HITL) 安全審批",
+            desc: "模擬有限狀態機轉換流程。體驗唯讀審計任務如何自動推進至完成，而破壞性操作 (DROP TABLE) 則自動暫停並強制要求雙人授權權杖。",
+            alertTitle: "🚨 HITL 閘門中斷：偵測到破壞性資料庫變更！",
+            alertDesc: "Agent 嘗試執行破壞性 DDL 操作。狀態機已自動暫停掛起。請輸入 SRE 雙人授權權杖以繼續："
+          },
+          m4: {
+            title: "里程碑 4：持續 CI/CD 自動化評測套件 (Pytest 回歸驗收)",
+            desc: "即時執行統計評測基準，對召回率 (>= 88%)、真實性 (>= 90%) 及 P99 延遲 (< 2500ms) 進行嚴格的代碼合併防禦驗證。",
+            runBtn: "執行 Pytest CI/CD 自動化評測套件"
+          },
+          localTitle: "在你的電腦本機端運行（零付費 API Key 依賴，開箱即跑）"
+        },
         footer: "專為前線部署工程師 (FDE) 與現代 AI 實踐者打造 • DeepMind Antigravity 特別版"
       }
     };
@@ -1586,6 +1890,7 @@ if __name__ == "__main__":
       document.getElementById('tab-title-playbook').textContent = data.tabs.playbook;
       document.getElementById('tab-title-assessment').textContent = data.tabs.assessment;
       document.getElementById('tab-title-tech').textContent = data.tabs.tech;
+      document.getElementById('tab-title-lab').textContent = data.tabs.lab;
       const card2Btn = document.getElementById('card2-tech-btn');
       if (card2Btn) card2Btn.textContent = data.card2TechBtn;
 
@@ -1617,6 +1922,7 @@ if __name__ == "__main__":
       renderDiagnostic();
       calculateDiagnostic();
       renderTechBlueprints();
+      renderLab();
     }
 
     function toggleLanguage() {
@@ -1639,7 +1945,7 @@ if __name__ == "__main__":
     }
 
     function switchTab(tabId) {
-      const tabs = ['role', 'stack', 'roadmap', 'playbook', 'assessment', 'tech'];
+      const tabs = ['role', 'stack', 'roadmap', 'playbook', 'assessment', 'tech', 'lab'];
       tabs.forEach(t => {
         const el = document.getElementById('tab-' + t);
         const btn = document.getElementById('btn-' + t);
@@ -1740,6 +2046,479 @@ if __name__ == "__main__":
           verdictRec.innerHTML = "<strong>Recommended Immediate Priority:</strong> Target FDE and Lead AI Solutions roles at tier-1 AI firms (OpenAI, Anthropic, Scale AI, Databricks, Palantir). Focus on open-sourcing production agent architectures and speaking at AI systems conferences.";
         }
       }
+    }
+
+    // -------------------------------------------------------------
+    // Tab 7: Hands-on Enterprise Lab Simulators & State Engine
+    // -------------------------------------------------------------
+    let currentLabMilestone = 1;
+
+    function switchLabMilestone(idx) {
+      currentLabMilestone = idx;
+      for (let i = 1; i <= 4; i++) {
+        const p = document.getElementById('lab-panel-' + i);
+        const b = document.getElementById('lab-tab-' + i);
+        if (p) {
+          if (i === idx) p.classList.remove('hidden');
+          else p.classList.add('hidden');
+        }
+        if (b) {
+          if (i === idx) {
+            b.className = "lab-pill px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-transparent bg-[var(--primary)] text-[var(--primary-foreground)]";
+          } else {
+            b.className = "lab-pill px-3 py-1.5 rounded-lg text-xs font-semibold transition border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] hover:bg-[var(--accent)]";
+          }
+        }
+      }
+    }
+
+    function renderLab() {
+      const lang = i18nData[currentLang].lab;
+      if (!lang) return;
+      document.getElementById('lab-badge').textContent = lang.badge;
+      document.getElementById('lab-header-title').textContent = lang.title;
+      document.getElementById('lab-header-desc').textContent = lang.desc;
+      document.getElementById('lab-repo-link').textContent = lang.repoLink;
+      for (let i = 1; i <= 4; i++) {
+        const tabEl = document.getElementById('lab-tab-' + i);
+        if (tabEl) tabEl.textContent = lang.pills[i - 1];
+      }
+      document.getElementById('m1-title').textContent = lang.m1.title;
+      document.getElementById('m1-desc').textContent = lang.m1.desc;
+      document.getElementById('m1-input-label').textContent = lang.m1.inputLabel;
+      document.getElementById('m1-output-label').textContent = lang.m1.outputLabel;
+      document.getElementById('m1-run-btn-text').textContent = lang.m1.runBtn;
+
+      document.getElementById('m2-title').textContent = lang.m2.title;
+      document.getElementById('m2-desc').textContent = lang.m2.desc;
+      document.getElementById('m2-presets-label').textContent = lang.m2.presetsLabel;
+
+      document.getElementById('m3-title').textContent = lang.m3.title;
+      document.getElementById('m3-desc').textContent = lang.m3.desc;
+      document.getElementById('hitl-alert-title').textContent = lang.m3.alertTitle;
+
+      document.getElementById('m4-title').textContent = lang.m4.title;
+      document.getElementById('m4-desc').textContent = lang.m4.desc;
+      document.getElementById('m4-run-btn').textContent = lang.m4.runBtn;
+      document.getElementById('lab-local-title').textContent = lang.localTitle;
+
+      // Initialize preset 1 if input is empty
+      const valInput = document.getElementById('valInputJson');
+      if (valInput && !valInput.value.trim()) {
+        loadValidatorPreset('valid');
+        runLabSearch('slowness in payment service');
+      }
+    }
+
+    function loadValidatorPreset(preset) {
+      const valInput = document.getElementById('valInputJson');
+      if (preset === 'valid') {
+        valInput.value = JSON.stringify({
+          clause_id: "CLAUSE-001",
+          contract_title: "Payment Webhook Latency SLA",
+          risk_level: "HIGH",
+          confidence_score: 0.94,
+          identified_vulnerabilities: [
+            "P99 latency breach risk on payment authorization"
+          ],
+          actionable_mitigation: "Deploy Envoy proxy circuit breaker and scale Kubernetes replicas to 8 pods."
+        }, null, 2);
+      } else if (preset === 'lazy') {
+        valInput.value = JSON.stringify({
+          clause_id: "CLAUSE-002",
+          contract_title: "GDPR Cross-Border Transfer",
+          risk_level: "CRITICAL",
+          confidence_score: 0.85,
+          identified_vulnerabilities: [
+            "Missing explicit DPA consent under Article 44"
+          ],
+          actionable_mitigation: "TBD: Please contact admin later to review this issue."
+        }, null, 2);
+      } else if (preset === 'bad_id') {
+        valInput.value = JSON.stringify({
+          clause_id: "BAD_ID_999",
+          contract_title: "Data Sovereignty Compliance",
+          risk_level: "LOW",
+          confidence_score: 0.50,
+          identified_vulnerabilities: [
+            "Uncalibrated logging format"
+          ],
+          actionable_mitigation: "Configure CloudWatch structured logging metric filters with sufficient character count."
+        }, null, 2);
+      }
+      runLabValidator();
+    }
+
+    function runLabValidator() {
+      const raw = document.getElementById('valInputJson').value;
+      const resBox = document.getElementById('valResultBox');
+      try {
+        const obj = JSON.parse(raw);
+        const errors = [];
+
+        // 1. Regex clause_id
+        if (!obj.clause_id || !/^CLAUSE-\d{3,4}$/.test(obj.clause_id)) {
+          errors.push({
+            field: "clause_id",
+            msg: "String should match pattern '^CLAUSE-\\d{3,4}$' (e.g. 'CLAUSE-001')",
+            val: obj.clause_id
+          });
+        }
+        // 2. Risk level
+        const validRisks = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
+        if (!validRisks.includes(obj.risk_level)) {
+          errors.push({
+            field: "risk_level",
+            msg: "Input should be 'CRITICAL', 'HIGH', 'MEDIUM' or 'LOW'",
+            val: obj.risk_level
+          });
+        }
+        // 3. Confidence score
+        if (typeof obj.confidence_score !== 'number' || obj.confidence_score < 0.0 || obj.confidence_score > 1.0) {
+          errors.push({
+            field: "confidence_score",
+            msg: "Input should be greater than or equal to 0.0 and less than or equal to 1.0",
+            val: obj.confidence_score
+          });
+        }
+        // 4. Vulnerabilities array
+        if (!Array.isArray(obj.identified_vulnerabilities) || obj.identified_vulnerabilities.length < 1) {
+          errors.push({
+            field: "identified_vulnerabilities",
+            msg: "List should have at least 1 item",
+            val: obj.identified_vulnerabilities
+          });
+        }
+        // 5. Mitigation length and Anti-Lazy check
+        const mit = (typeof obj.actionable_mitigation === 'string') ? obj.actionable_mitigation : '';
+        if (mit.length < 25) {
+          errors.push({
+            field: "actionable_mitigation",
+            msg: "String should have at least 25 characters",
+            val: mit
+          });
+        } else {
+          const lowerMit = mit.toLowerCase();
+          const forbidden = ["tbd", "todo", "contact admin", "look at logs", "n/a", "待確認", "聯絡管理員"];
+          for (let f of forbidden) {
+            if (lowerMit.includes(f)) {
+              errors.push({
+                field: "actionable_mitigation",
+                msg: "Contract Violation: Mitigation contains prohibited lazy placeholder '" + f + "'. Must supply concrete technical remediation runbook.",
+                val: mit
+              });
+              break;
+            }
+          }
+        }
+
+        if (errors.length > 0) {
+          resBox.innerHTML = `
+            <div class="text-rose-400 font-bold mb-2">❌ ValidationError: ${errors.length} validation error(s) for ClauseRiskAssessment</div>
+            ${errors.map(e => `
+              <div class="pl-3 border-l-2 border-rose-500 mb-2.5">
+                <span class="text-amber-400 font-semibold">${escapeHtml(e.field)}</span><br>
+                <span class="text-rose-300">Value error, ${escapeHtml(e.msg)}</span><br>
+                <span class="text-slate-500 text-[10px]">[type=value_error, input_value=${escapeHtml(String(e.val))}]</span>
+              </div>
+            `).join('')}
+            <div class="mt-2 text-rose-300 font-bold bg-rose-500/10 p-2 rounded border border-rose-500/20">
+              🚨 Anti-Hallucination Gate BLOCKED payload from entering production database.
+            </div>
+          `;
+        } else {
+          resBox.innerHTML = `
+            <div class="text-emerald-400 font-bold mb-2">✔ Pydantic v2 Schema Contract PASSED (Zero Errors)</div>
+            <div class="text-slate-300 mb-2">Model deserialized in 1.4ms via Rust core engine.</div>
+            <div class="p-2 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px]">
+              <strong>Validated Spec:</strong><br>
+              • Clause ID: <code>${escapeHtml(obj.clause_id)}</code><br>
+              • Severity: <span class="font-bold text-sky-400">${escapeHtml(obj.risk_level)}</span> (Confidence: ${(obj.confidence_score*100).toFixed(1)}%)<br>
+              • Mitigation: ${escapeHtml(obj.actionable_mitigation)}
+            </div>
+            <div class="mt-2 text-emerald-400 font-semibold">✅ Safe for downstream transactional write.</div>
+          `;
+        }
+      } catch (err) {
+        resBox.innerHTML = `<div class="text-rose-400 font-bold">❌ JSON Syntax Error:</div><div class="text-rose-300">${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    const LAB_CORPUS = [
+      { id: "CLAUSE-001", title: "Payment Webhook Latency SLA", text: "APAC Payment Gateway authorization webhooks must respond within 250 milliseconds at P99 under peak load. Any latency exceeding 500ms triggers a P1 incident and SLA penalty.", tags: ["payment", "latency", "apac", "sla", "webhook"] },
+      { id: "CLAUSE-002", title: "Data Sovereignty & Cross-Border Transfer", text: "Customer Personally Identifiable Information (PII) residing in the EU region must never leave Frankfurt datacenters without cryptographic pseudonymization and explicit DPA consent under GDPR Article 44.", tags: ["gdpr", "pii", "eu", "sovereignty", "compliance"] },
+      { id: "CLAUSE-003", title: "Database Mutation & Disaster Recovery", text: "Destructive SQL operations (DROP, TRUNCATE, mass DELETE) on production financial ledgers require multi-party dual authorization tokens and automated pre-flight snapshotting.", tags: ["database", "mutation", "disaster-recovery", "audit", "security"] },
+      { id: "CLAUSE-004", title: "Zero-Downtime Schema Migration", text: "PostgreSQL DDL migrations on high-traffic tables must specify lock_timeout = 2s and statement_timeout = 5s to prevent exclusive table lock starvation during peak operations.", tags: ["postgres", "migration", "ddl", "lock_timeout", "sre"] },
+      { id: "CLAUSE-005", title: "API Rate Limiting & Token Governance", text: "External model endpoints must implement exponential backoff with jitter and per-tenant rate limits of 100 requests per minute to prevent token budget exhaustion.", tags: ["rate-limiting", "token-governance", "api", "budget"] }
+    ];
+
+    function runLabSearch(query) {
+      const qTokens = query.toLowerCase().split(/\W+/).filter(Boolean);
+
+      // 1. BM25 Sparse Simulation
+      const sparseResults = LAB_CORPUS.map(doc => {
+        const fullText = (doc.title + " " + doc.text).toLowerCase();
+        let matches = 0;
+        qTokens.forEach(t => { if (fullText.includes(t)) matches++; });
+        return { ...doc, score: matches > 0 ? (matches * 1.5).toFixed(2) : "0.00" };
+      }).sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+
+      // 2. Dense Semantic Simulation
+      const synonyms = {
+        "slowness": ["latency", "timeout", "delay", "respond", "p99", "ms"],
+        "privacy": ["pii", "gdpr", "sovereignty", "pseudonymization"],
+        "destruction": ["destructive", "mutation", "drop", "delete", "truncate"]
+      };
+      const denseResults = LAB_CORPUS.map(doc => {
+        const fullText = (doc.title + " " + doc.text).toLowerCase();
+        let sim = 0.15;
+        qTokens.forEach(t => {
+          if (fullText.includes(t)) sim += 0.35;
+          if (synonyms[t] && synonyms[t].some(s => fullText.includes(s))) sim += 0.45;
+        });
+        return { ...doc, score: Math.min(sim, 0.98).toFixed(3) };
+      }).sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+
+      // 3. Reciprocal Rank Fusion (k=60)
+      const rrfMap = {};
+      denseResults.forEach((doc, rank) => {
+        rrfMap[doc.id] = (rrfMap[doc.id] || 0) + (1.0 / (60 + rank + 1));
+      });
+      sparseResults.forEach((doc, rank) => {
+        rrfMap[doc.id] = (rrfMap[doc.id] || 0) + (1.0 / (60 + rank + 1));
+      });
+
+      const hybridResults = LAB_CORPUS.map(doc => ({
+        ...doc,
+        rrfScore: rrfMap[doc.id] || 0.0
+      })).sort((a, b) => b.rrfScore - a.rrfScore);
+
+      const grid = document.getElementById('searchResultsGrid');
+      grid.innerHTML = `
+        <!-- Column 1: Dense-Only Vector -->
+        <div class="p-3 rounded-lg border border-[var(--border)] bg-[var(--card)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-sky-500">1. Dense Vector (Cosine)</span>
+            <span class="text-[10px] text-[var(--muted-foreground)]">Semantic Match</span>
+          </div>
+          <div class="space-y-1.5 text-xs">
+            ${denseResults.slice(0, 2).map((d, i) => `
+              <div class="p-2 rounded bg-[var(--accent)] border border-[var(--border)]">
+                <div class="flex justify-between items-center text-[11px]">
+                  <span class="font-bold text-[var(--foreground)]">#${i+1} [${escapeHtml(d.id)}]</span>
+                  <span class="font-mono text-sky-400 font-semibold">${d.score}</span>
+                </div>
+                <div class="text-[11px] text-[var(--muted-foreground)] truncate">${escapeHtml(d.title)}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="text-[10px] text-[var(--muted-foreground)]">⚠️ Blind to exact technical identifiers or code tags.</div>
+        </div>
+
+        <!-- Column 2: BM25 Sparse Lexical -->
+        <div class="p-3 rounded-lg border border-[var(--border)] bg-[var(--card)] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-500">2. BM25 Lexical (GIN)</span>
+            <span class="text-[10px] text-[var(--muted-foreground)]">Exact Keyword</span>
+          </div>
+          <div class="space-y-1.5 text-xs">
+            ${sparseResults.slice(0, 2).map((d, i) => `
+              <div class="p-2 rounded bg-[var(--accent)] border border-[var(--border)]">
+                <div class="flex justify-between items-center text-[11px]">
+                  <span class="font-bold text-[var(--foreground)]">#${i+1} [${escapeHtml(d.id)}]</span>
+                  <span class="font-mono text-amber-400 font-semibold">score: ${d.score}</span>
+                </div>
+                <div class="text-[11px] text-[var(--muted-foreground)] truncate">${escapeHtml(d.title)}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="text-[10px] text-[var(--muted-foreground)]">⚠️ Fails when query uses synonyms ('slowness' vs 'latency').</div>
+        </div>
+
+        <!-- Column 3: 2-Stage Hybrid RRF (k=60) -->
+        <div class="p-3 rounded-lg border border-emerald-500/30 bg-emerald-500/5 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-emerald-500">3. Hybrid RRF (k=60)</span>
+            <span class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">👑 Recommended</span>
+          </div>
+          <div class="space-y-1.5 text-xs">
+            ${hybridResults.slice(0, 2).map((d, i) => `
+              <div class="p-2 rounded bg-[var(--card)] border border-emerald-500/20">
+                <div class="flex justify-between items-center text-[11px]">
+                  <span class="font-bold text-[var(--foreground)]">#${i+1} [${escapeHtml(d.id)}]</span>
+                  <span class="font-mono text-emerald-400 font-semibold">${d.rrfScore.toFixed(5)}</span>
+                </div>
+                <div class="text-[11px] text-[var(--foreground)] font-medium truncate">${escapeHtml(d.title)}</div>
+                <div class="text-[10px] text-[var(--muted-foreground)] line-clamp-1 mt-0.5">${escapeHtml(d.text)}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="text-[10px] text-emerald-400 font-medium">✔ Combines semantic understanding with exact code token precision.</div>
+        </div>
+      `;
+    }
+
+    function initLabAgent(scenario) {
+      const isDanger = (scenario === 'danger');
+      const badge = document.getElementById('agentStateBadge');
+      const counter = document.getElementById('agentStepCounter');
+      const hitlBox = document.getElementById('hitlInterruptionBox');
+      const logs = document.getElementById('agentAuditLogs');
+
+      hitlBox.classList.add('hidden');
+      logs.innerHTML = '';
+
+      function addLog(msg, color = 'text-slate-300') {
+        const div = document.createElement('div');
+        div.className = color;
+        div.textContent = msg;
+        logs.appendChild(div);
+        logs.scrollTop = logs.scrollHeight;
+      }
+
+      function setNodeHighlight(activeNodeId) {
+        ['node-plan', 'node-retrieval', 'node-security', 'node-execute'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            if (id === activeNodeId) {
+              el.className = "p-2 rounded border border-sky-500 bg-sky-500/20 text-sky-400 font-bold shadow-sm";
+            } else {
+              el.className = "p-2 rounded border border-[var(--border)] bg-[var(--accent)] text-[var(--muted-foreground)]";
+            }
+          }
+        });
+      }
+
+      badge.textContent = "PLANNING";
+      badge.className = "text-xs font-extrabold px-2.5 py-0.5 rounded bg-sky-500/10 text-sky-400 font-mono";
+      counter.textContent = "Step: 1 / 6";
+      setNodeHighlight('node-plan');
+      addLog(`[PLANNER] Session initialized. Objective: ${isDanger ? 'Destructive DROP TABLE ledger' : 'Read-only payment SLA audit'}`);
+
+      setTimeout(() => {
+        counter.textContent = "Step: 2 / 6";
+        setNodeHighlight('node-retrieval');
+        addLog(`[HYBRID_RAG] Parallel search completed. Top context: ${isDanger ? 'CLAUSE-003 (Disaster Recovery)' : 'CLAUSE-001 (Payment SLA)'}`);
+
+        setTimeout(() => {
+          counter.textContent = "Step: 3 / 6";
+          setNodeHighlight('node-security');
+
+          if (isDanger) {
+            badge.textContent = "AWAITING_HUMAN_APPROVAL";
+            badge.className = "text-xs font-extrabold px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono";
+            addLog("[SECURITY] High-risk destructive mutation flagged: 'DROP TABLE customer_financial_ledger_2023 CASCADE;'", 'text-amber-400 font-semibold');
+            addLog("[HITL GATE] State machine DAG SUSPENDED. Checkpoint saved to durable storage.", 'text-amber-300 font-bold');
+            hitlBox.classList.remove('hidden');
+          } else {
+            badge.textContent = "EXECUTING";
+            addLog("[SECURITY] Action verified read-only: 'EVALUATE_SPEC_COMPLIANCE'. Transitioning to EXECUTING.");
+            setTimeout(() => {
+              counter.textContent = "Step: 4 / 6";
+              setNodeHighlight('node-execute');
+              badge.textContent = "COMPLETED";
+              badge.className = "text-xs font-extrabold px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono";
+              addLog("[EXECUTOR] Emitted validated Pydantic v2 ClauseRiskAssessment contract. Risk=MEDIUM.", 'text-emerald-400 font-bold');
+              addLog("[STATUS] DAG reached terminal END node successfully.", 'text-emerald-300');
+            }, 600);
+          }
+        }, 600);
+      }, 600);
+    }
+
+    function resolveLabHITL(approved) {
+      const hitlBox = document.getElementById('hitlInterruptionBox');
+      const badge = document.getElementById('agentStateBadge');
+      const logs = document.getElementById('agentAuditLogs');
+      const token = document.getElementById('hitlTokenInput').value.trim();
+
+      function addLog(msg, color = 'text-slate-300') {
+        const div = document.createElement('div');
+        div.className = color;
+        div.textContent = msg;
+        logs.appendChild(div);
+        logs.scrollTop = logs.scrollHeight;
+      }
+
+      hitlBox.classList.add('hidden');
+
+      if (!approved) {
+        badge.textContent = "REJECTED";
+        badge.className = "text-xs font-extrabold px-2.5 py-0.5 rounded bg-rose-500/10 text-rose-400 font-mono";
+        addLog("[HITL GATE] Operator REJECTED mutation action. Execution aborted.", 'text-rose-400 font-bold');
+        addLog("[STATUS] DAG halted safely without altering production database state.", 'text-rose-300');
+        return;
+      }
+
+      if (!token.startsWith('AUTH-SEC-')) {
+        badge.textContent = "REJECTED";
+        badge.className = "text-xs font-extrabold px-2.5 py-0.5 rounded bg-rose-500/10 text-rose-400 font-mono";
+        addLog("[HITL GATE] Invalid token '" + token + "'. Format must start with 'AUTH-SEC-'. Aborting.", 'text-rose-400 font-bold');
+        return;
+      }
+
+      badge.textContent = "EXECUTING";
+      badge.className = "text-xs font-extrabold px-2.5 py-0.5 rounded bg-sky-500/10 text-sky-400 font-mono";
+      addLog("[HITL GATE] Dual-auth token verified: '" + token + "'. Resuming DAG from checkpoint.", 'text-emerald-400 font-semibold');
+
+      setTimeout(() => {
+        badge.textContent = "COMPLETED";
+        badge.className = "text-xs font-extrabold px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono";
+        const nodeExe = document.getElementById('node-execute');
+        if (nodeExe) nodeExe.className = "p-2 rounded border border-emerald-500 bg-emerald-500/20 text-emerald-400 font-bold shadow-sm";
+        addLog("[EXECUTOR] Executed authorized schema maintenance with pre-flight snapshot.", 'text-emerald-400');
+        addLog("[OUTPUT] Emitted validated ClauseRiskAssessment contract: Risk=CRITICAL, Status=AUDITED.", 'text-emerald-300 font-bold');
+      }, 700);
+    }
+
+    function runLabCICDGate() {
+      const term = document.getElementById('cicdTerminalOutput');
+      const btn = document.getElementById('btnRunCICD');
+      term.innerHTML = '';
+      btn.disabled = true;
+
+      function printTerm(msg, color = 'text-slate-300') {
+        const div = document.createElement('div');
+        div.className = color;
+        div.textContent = msg;
+        term.appendChild(div);
+        term.scrollTop = term.scrollHeight;
+      }
+
+      printTerm('$ python -m pytest exercises/fde_enterprise_lab/test_eval_gate.py -v', 'text-sky-400 font-bold');
+      printTerm('============================= test session starts =============================', 'text-slate-400');
+      printTerm('rootdir: /fde-ai-swe-masterclass, plugins: anyio-4.12.1', 'text-slate-500');
+      printTerm('collecting ... collected 9 items', 'text-slate-400');
+
+      setTimeout(() => {
+        printTerm('test_eval_gate.py::TestSpecDrivenContracts::test_valid_clause_risk_assessment PASSED', 'text-emerald-400');
+        printTerm('test_eval_gate.py::TestSpecDrivenContracts::test_anti_lazy_validator_rejects_todo PASSED', 'text-emerald-400');
+        printTerm('test_eval_gate.py::TestHybridRetrievalEngine::test_hybrid_rrf_combines_strengths PASSED', 'text-emerald-400');
+        printTerm('test_eval_gate.py::TestAgentStateMachineHITL::test_mutating_destructive_goal_triggers_hitl PASSED', 'text-emerald-400');
+        printTerm('test_eval_gate.py::TestCICDEvaluationGates::test_statistical_sla_benchmark PASSED', 'text-emerald-400');
+
+        setTimeout(() => {
+          printTerm('============================== 9 passed in 0.69s ==============================', 'text-emerald-300 font-bold');
+          printTerm('🎉 ALL CI/CD EVALUATION GATES PASSED! READY FOR PRODUCTION MERGE.', 'text-emerald-400 font-bold');
+
+          document.getElementById('m4-val-recall').textContent = "100.0%";
+          document.getElementById('m4-val-recall').className = "py-2.5 px-3 font-mono text-emerald-400 font-bold";
+          document.getElementById('m4-status-recall').textContent = "PASSED";
+          document.getElementById('m4-status-recall').className = "py-2.5 px-3 font-bold text-emerald-400";
+
+          document.getElementById('m4-val-faith').textContent = "95.0%";
+          document.getElementById('m4-val-faith').className = "py-2.5 px-3 font-mono text-emerald-400 font-bold";
+          document.getElementById('m4-status-faith').textContent = "PASSED";
+          document.getElementById('m4-status-faith').className = "py-2.5 px-3 font-bold text-emerald-400";
+
+          document.getElementById('m4-val-lat').textContent = "0.29 ms";
+          document.getElementById('m4-val-lat').className = "py-2.5 px-3 font-mono text-emerald-400 font-bold";
+          document.getElementById('m4-status-lat').textContent = "PASSED";
+          document.getElementById('m4-status-lat').className = "py-2.5 px-3 font-bold text-emerald-400";
+
+          btn.disabled = false;
+        }, 500);
+      }, 500);
     }
 
     // Initialize on load
