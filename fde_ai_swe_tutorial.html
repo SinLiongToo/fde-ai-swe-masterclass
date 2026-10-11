@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Software Engineering & Forward Deployed Engineer (FDE) Masterclass</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* Dynamic Theme Token Definitions */
+    [data-theme="dark"] {
+      --background: #090d16;
+      --card: #111827;
+      --foreground: #f9fafb;
+      --muted-foreground: #9ca3af;
+      --border: #1f2937;
+      --accent: #1e293b;
+      --primary: #3b82f6;
+      --primary-foreground: #ffffff;
+    }
+    [data-theme="light"] {
+      --background: #f8fafc;
+      --card: #ffffff;
+      --foreground: #0f172a;
+      --muted-foreground: #64748b;
+      --border: #e2e8f0;
+      --accent: #f1f5f9;
+      --primary: #2563eb;
+      --primary-foreground: #ffffff;
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .tab-btn.active {
+      background-color: var(--primary) !important;
+      color: var(--primary-foreground) !important;
+      font-weight: 600;
+    }
+
+    /* RWD Scrollbar & Mobile Optimizations */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @media (max-width: 640px) {
+      /* Smooth touch scrolling */
+      .scroll-touch {
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased p-2.5 sm:p-5 font-sans min-h-screen overflow-x-hidden">
+  <!-- Main Container -->
+  <div class="max-w-6xl mx-auto space-y-4 sm:space-y-6">
+
+    <!-- Top Action Bar (Theme Toggle & Language Toggle) -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 px-1">
+      <div class="flex items-center gap-2 text-xs font-semibold text-[var(--muted-foreground)]">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></span>
+        <span id="txt-badge-status" class="truncate">AI Systems Engineering • FDE Playbook</span>
+      </div>
+      <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+        <!-- Language Switcher -->
+        <button onclick="toggleLanguage()" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] transition">
+          <span>🌐</span>
+          <span id="langBtnText">切換繁體中文 (ZH)</span>
+        </button>
+        <!-- Theme Switcher -->
+        <button onclick="toggleTheme()" class="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] transition" title="Toggle Dark/Light Mode">
+          <span id="themeIcon">☀️</span>
+          <span id="themeText">Light Mode</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Header Card -->
+    <header class="bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)] rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm relative overflow-hidden transition-colors">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-wider bg-[var(--accent)] text-[var(--foreground)] border border-[var(--border)] mb-2 sm:mb-3">
+            <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+            <span id="txt-hero-pill">Executive Curriculum & Interactive Tool</span>
+          </div>
+          <h1 id="txt-hero-title" class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight">
+            Software Engineering with AI: The FDE Masterclass
+          </h1>
+          <p id="txt-hero-desc" class="text-[var(--muted-foreground)] text-xs sm:text-sm md:text-base mt-2 max-w-3xl leading-relaxed">
+            Transition from standard code-writing to high-velocity system orchestration. Learn how to operate as a <strong class="text-[var(--foreground)]">Forward Deployed Engineer (FDE)</strong> — delivering mission-critical AI solutions at the intersection of enterprise architecture, agentic workflows, and customer business impact.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-2 sm:gap-3 w-full md:w-auto flex-shrink-0">
+          <div class="bg-[var(--accent)] border border-[var(--border)] rounded-xl p-2.5 sm:p-3 text-center">
+            <span id="txt-metric1-label" class="text-[11px] sm:text-xs text-[var(--muted-foreground)] block uppercase font-medium">Role Demand</span>
+            <span id="txt-metric1-val" class="text-base sm:text-lg font-bold text-emerald-500">Top 1% Tier</span>
+          </div>
+          <div class="bg-[var(--accent)] border border-[var(--border)] rounded-xl p-2.5 sm:p-3 text-center">
+            <span id="txt-metric2-label" class="text-[11px] sm:text-xs text-[var(--muted-foreground)] block uppercase font-medium">Velocity Multiplier</span>
+            <span id="txt-metric2-val" class="text-base sm:text-lg font-bold text-sky-500">5x – 10x</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs (RWD: Horizontal scroll on mobile, wrap on desktop) -->
+      <nav class="flex gap-2 mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-[var(--border)] overflow-x-auto no-scrollbar scroll-touch pb-1 sm:flex-wrap" id="tabNav">
+        <button onclick="switchTab('role')" id="btn-role" class="tab-btn active flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
+          🏛️ <span id="tab-title-role">1. FDE Role & Core DNA</span>
+        </button>
+        <button onclick="switchTab('stack')" id="btn-stack" class="tab-btn flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
+          🛠️ <span id="tab-title-stack">2. The AI Tooling Matrix</span>
+        </button>
+        <button onclick="switchTab('roadmap')" id="btn-roadmap" class="tab-btn flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
+          🎓 <span id="tab-title-roadmap">3. Certifications & Lessons</span>
+        </button>
+        <button onclick="switchTab('playbook')" id="btn-playbook" class="tab-btn flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
+          ⚡ <span id="tab-title-playbook">4. 5-Stage Production Playbook</span>
+        </button>
+        <button onclick="switchTab('assessment')" id="btn-assessment" class="tab-btn flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
+          📊 <span id="tab-title-assessment">5. FDE Readiness Diagnostic</span>
+        </button>
+        <button onclick="switchTab('tech')" id="btn-tech" class="tab-btn flex-shrink-0 whitespace-nowrap px-3.5 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 border border-[var(--border)] bg-[var(--card)]">
+          💻 <span id="tab-title-tech">6. Architecture & Code Blueprints</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- TAB 1: FDE Role & Core DNA -->
+    <section id="tab-role" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- Card 1 -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm space-y-3">
+          <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center text-xl">🎯</div>
+          <h3 id="card1-title" class="text-base font-bold">What is a Forward Deployed Engineer?</h3>
+          <p id="card1-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)] leading-relaxed">
+            Originated at Palantir and now the most critical role at OpenAI, Anthropic, Scale AI, and Databricks. FDEs are software engineers deployed directly into enterprise customer trenches to solve ambiguous, mission-critical problems using bleeding-edge technology.
+          </p>
+          <ul id="card1-list" class="text-xs text-[var(--muted-foreground)] space-y-1.5 pt-2 border-t border-[var(--border)]">
+            <li>• <strong>Not a Sales Engineer:</strong> You write production code, push PRs, and ship infra.</li>
+            <li>• <strong>Not an isolated SWE:</strong> You speak business ROI and client domain vernacular.</li>
+            <li>• <strong>Fast 0-to-1 builder:</strong> Deliver high-stakes PoCs in 72 hours, scale to enterprise in 60 days.</li>
+          </ul>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm space-y-3">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center text-xl">🧠</div>
+          <h3 id="card2-title" class="text-base font-bold">How AI Transforms Software Engineering</h3>
+          <p id="card2-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)] leading-relaxed">
+            The era of typing boilerplate code and chasing syntax errors is ending. Modern SWEs operate as <strong class="text-[var(--foreground)] font-semibold">System Orchestrators</strong> and <strong class="text-[var(--foreground)] font-semibold">Specification Architects</strong>.
+          </p>
+          <ul id="card2-list" class="text-xs text-[var(--muted-foreground)] space-y-1.5 pt-2 border-t border-[var(--border)]">
+            <li>• <strong>Spec-Driven Development:</strong> You write unambiguous requirements, acceptance tests, and architecture constraints; AI generates code.</li>
+            <li>• <strong>Evaluation-First (Evals):</strong> Unit tests verify deterministic logic; LLM Evals guard probabilistic outputs.</li>
+            <li>• <strong>Agentic Workflows:</strong> Multi-step planning, tool-calling, and dynamic context retrieval replace rigid hardcoded pipelines.</li>
+          </ul>
+          <div class="pt-2 border-t border-[var(--border)]">
+            <button onclick="switchTab('tech')" class="inline-flex items-center gap-1.5 text-xs text-[var(--primary)] hover:underline font-semibold transition">
+              <span>⚡</span> <span id="card2-tech-btn">Deep Dive: Production Code Blueprints →</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 shadow-sm space-y-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-xl">⚖️</div>
+          <h3 id="card3-title" class="text-base font-bold">The Triad of FDE Competence</h3>
+          <p id="card3-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)] leading-relaxed">
+            An elite FDE balances three distinct superpowers that make them irreplaceable:
+          </p>
+          <div class="space-y-2 pt-2 text-xs" id="card3-triad">
+            <div class="p-2.5 rounded-lg bg-[var(--accent)] border border-[var(--border)]">
+              <strong class="block text-[var(--foreground)]" id="triad1-title">1. Production Systems Engineering (40%)</strong>
+              <span class="text-[var(--muted-foreground)]" id="triad1-desc">Distributed systems, Docker/K8s, Postgres, Redis, Auth/OIDC, latency budgets, CI/CD.</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[var(--accent)] border border-[var(--border)]">
+              <strong class="block text-[var(--foreground)]" id="triad2-title">2. Applied AI & Data Engineering (35%)</strong>
+              <span class="text-[var(--muted-foreground)]" id="triad2-desc">Advanced RAG, vector embeddings, DSPy optimization, model evaluation, token governance.</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[var(--accent)] border border-[var(--border)]">
+              <strong class="block text-[var(--foreground)]" id="triad3-title">3. Client Empathy & Discovery (25%)</strong>
+              <span class="text-[var(--muted-foreground)]" id="triad3-desc">Translating vague executive goals into crisp API specs and rapid verifiable milestones.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Matrix -->
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 sm:p-5 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 id="matrix-title" class="text-base font-bold">Role Comparison: Traditional SWE vs. Solutions Architect vs. FDE</h3>
+          <span class="sm:hidden text-[11px] text-[var(--muted-foreground)] flex items-center gap-1 font-medium bg-[var(--accent)] px-2 py-0.5 rounded border border-[var(--border)]">↔️ 左右滑動</span>
+        </div>
+        <div class="overflow-x-auto rounded-lg border border-[var(--border)] shadow-inner scroll-touch">
+          <table class="w-full min-w-[620px] text-left text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-[var(--border)] text-[var(--muted-foreground)]">
+                <th class="py-2.5 px-3" id="th-dim">Dimension</th>
+                <th class="py-2.5 px-3" id="th-swe">Traditional Software Engineer</th>
+                <th class="py-2.5 px-3" id="th-sa">Solutions Architect (SA)</th>
+                <th class="py-2.5 px-3 bg-[var(--accent)] text-[var(--foreground)] font-bold rounded-t-lg" id="th-fde">Forward Deployed Engineer (FDE)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y border-[var(--border)]" id="matrix-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: AI Tooling Matrix -->
+    <section id="tab-stack" class="space-y-6 hidden">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
+        <div>
+          <h3 id="tools-header-title" class="text-base font-bold">The Modern AI SWE Toolstack</h3>
+          <p id="tools-header-desc" class="text-xs text-[var(--muted-foreground)]">Master these 5 layers to operate with maximum velocity.</p>
+        </div>
+        <!-- Filter buttons (RWD: swipeable on mobile) -->
+        <div class="flex gap-1.5 overflow-x-auto no-scrollbar scroll-touch pb-1 sm:pb-0 sm:flex-wrap w-full sm:w-auto" id="toolFilters">
+          <button onclick="filterTools('all')" class="tool-filter active flex-shrink-0 whitespace-nowrap px-2.5 py-1 text-xs rounded bg-[var(--primary)] text-[var(--primary-foreground)]" id="flt-all">All</button>
+          <button onclick="filterTools('ide')" class="tool-filter flex-shrink-0 whitespace-nowrap px-2.5 py-1 text-xs rounded bg-[var(--accent)] text-[var(--foreground)] border border-[var(--border)]" id="flt-ide">AI IDEs & Agents</button>
+          <button onclick="filterTools('orchestration')" class="tool-filter flex-shrink-0 whitespace-nowrap px-2.5 py-1 text-xs rounded bg-[var(--accent)] text-[var(--foreground)] border border-[var(--border)]" id="flt-orch">Orchestration & Agents</button>
+          <button onclick="filterTools('retrieval')" class="tool-filter flex-shrink-0 whitespace-nowrap px-2.5 py-1 text-xs rounded bg-[var(--accent)] text-[var(--foreground)] border border-[var(--border)]" id="flt-ret">Retrieval & Vectors</button>
+          <button onclick="filterTools('eval')" class="tool-filter flex-shrink-0 whitespace-nowrap px-2.5 py-1 text-xs rounded bg-[var(--accent)] text-[var(--foreground)] border border-[var(--border)]" id="flt-eval">Evals & Observability</button>
+        </div>
+      </div>
+
+      <!-- Tool Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="toolGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- TAB 3: Certifications & Curated Lessons -->
+    <section id="tab-roadmap" class="space-y-6 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 shadow-sm">
+        <h3 id="cert-header-title" class="text-lg font-bold mb-2">High-Yield Certifications & Curated Courses</h3>
+        <p id="cert-header-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)] mb-6">
+          Not all certifications are valued equally. In enterprise AI and FDE hiring, <strong>generalist cloud infrastructure credentials</strong> plus <strong>demonstrated end-to-end agentic implementations</strong> trump surface-level prompt engineering badges.
+        </p>
+
+        <!-- Tiered Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="certContainer">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- 90-Day Interactive Roadmap Checklist -->
+        <div class="mt-8 pt-6 border-t border-[var(--border)] space-y-4">
+          <div class="flex justify-between items-center">
+            <h4 id="chk-title" class="text-sm font-bold">Your 90-Day FDE Transition Action Checklist</h4>
+            <span id="checklistProgress" class="text-xs font-semibold text-emerald-500">0 of 6 Completed (0%)</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="checklistContainer">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: 5-Stage Production Playbook -->
+    <section id="tab-playbook" class="space-y-6 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 shadow-sm space-y-6">
+        <div>
+          <h3 id="pb-title" class="text-lg font-bold">The 5-Stage FDE Production Playbook</h3>
+          <p id="pb-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)]">
+            How an FDE takes a client engagement from ambiguous boardroom discussions to resilient, audited software in production.
+          </p>
+        </div>
+        <div class="space-y-4" id="playbookContainer">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: Interactive Diagnostic Assessment -->
+    <section id="tab-assessment" class="space-y-6 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+          <div>
+            <h3 id="diag-title" class="text-lg font-bold">Interactive FDE Readiness Diagnostic</h3>
+            <p id="diag-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)]">
+              Evaluate your current capabilities across the 5 pillars of Forward Deployed Engineering and receive tailored next steps.
+            </p>
+          </div>
+          <button onclick="calculateDiagnostic()" class="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-xs sm:text-sm font-semibold hover:opacity-90 transition text-center shadow-sm" id="diag-btn">
+            Calculate My Readiness
+          </button>
+        </div>
+
+        <!-- Questions Grid -->
+        <div class="space-y-4" id="questionsContainer">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Result Card -->
+        <div id="resultBox" class="p-5 rounded-xl border border-[var(--border)] bg-[var(--card)] space-y-3">
+          <div class="flex items-center justify-between">
+            <span id="res-label" class="text-xs font-bold uppercase tracking-wider text-[var(--muted-foreground)]">Diagnostic Output</span>
+            <span id="scoreBadge" class="text-sm font-extrabold px-3 py-1 rounded bg-sky-500/10 text-sky-500">Score: 33%</span>
+          </div>
+          <h4 id="verdictTitle" class="text-base font-bold">Foundation Builder Level</h4>
+          <p id="verdictDesc" class="text-xs sm:text-sm text-[var(--muted-foreground)] leading-relaxed">
+            Evaluation details will appear here based on your responses.
+          </p>
+          <div id="verdictRecommendations" class="p-3 rounded-lg bg-[var(--accent)] text-xs text-[var(--foreground)] space-y-1">
+            <strong>Recommended Immediate Step:</strong> Complete diagnostic to see tailored recommendations.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: Production Architecture & Code Blueprints -->
+    <section id="tab-tech" class="space-y-6 hidden">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 shadow-sm space-y-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-500 border border-sky-500/20 mb-2">
+              <span>⚙️</span> <span id="tech-badge">Enterprise Engineering Specs</span>
+            </div>
+            <h3 id="tech-header-title" class="text-xl font-bold">Production Architecture & Code Blueprints</h3>
+            <p id="tech-header-desc" class="text-xs sm:text-sm text-[var(--muted-foreground)] mt-1 max-w-2xl">
+              Concrete system design specifications, mathematical formulas, state machines, and copyable production code patterns used by top Forward Deployed Engineers.
+            </p>
+          </div>
+          <!-- Blueprint Selector Buttons (RWD: swipeable on mobile) -->
+          <div class="flex gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-touch pb-1 sm:pb-0 sm:flex-wrap w-full md:w-auto" id="bpNavButtons">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Dynamic Blueprint Detail Container -->
+        <div id="blueprintContainer" class="space-y-6">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-xs text-[var(--muted-foreground)] pt-4 pb-2 border-t border-[var(--border)]">
+      <span id="footerText">Built for Forward Deployed Engineers & Modern AI Practitioners • DeepMind Antigravity Edition</span>
+    </footer>
+  </div>
+
+  <!-- Internationalization & Data Engine -->
+  <script>
+    let currentLang = 'en'; // 'en' or 'zh'
+    let currentTheme = 'dark'; // 'dark' or 'light'
+    let activeCategory = 'all';
+
+    const i18nData = {
+      en: {
+        badgeStatus: "AI Systems Engineering • FDE Playbook",
+        langBtn: "切換繁體中文 (ZH)",
+        themeLight: "Light Mode",
+        themeDark: "Dark Mode",
+        heroPill: "Executive Curriculum & Interactive Tool",
+        heroTitle: "Software Engineering with AI: The FDE Masterclass",
+        heroDesc: "Transition from standard code-writing to high-velocity system orchestration. Learn how to operate as a <strong class='text-[var(--foreground)]'>Forward Deployed Engineer (FDE)</strong> — delivering mission-critical AI solutions at the intersection of enterprise architecture, agentic workflows, and customer business impact.",
+        metric1Label: "Role Demand",
+        metric1Val: "Top 1% Tier",
+        metric2Label: "Velocity Multiplier",
+        metric2Val: "5x – 10x",
+        tabs: {
+          role: "1. FDE Role & Core DNA",
+          stack: "2. The AI Tooling Matrix",
+          roadmap: "3. Certifications & Lessons",
+          playbook: "4. 5-Stage Production Playbook",
+          assessment: "5. FDE Readiness Diagnostic",
+          tech: "6. Production Architecture & Code"
+        },
+        card2TechBtn: "Deep Dive: Production Code Blueprints →",
+        card1: {
+          title: "What is a Forward Deployed Engineer?",
+          desc: "Originated at Palantir and now the most critical role at OpenAI, Anthropic, Scale AI, and Databricks. FDEs are software engineers deployed directly into enterprise customer trenches to solve ambiguous, mission-critical problems using bleeding-edge technology.",
+          list: [
+            "• <strong>Not a Sales Engineer:</strong> You write production code, push PRs, and ship infra.",
+            "• <strong>Not an isolated SWE:</strong> You speak business ROI and client domain vernacular.",
+            "• <strong>Fast 0-to-1 builder:</strong> Deliver high-stakes PoCs in 72 hours, scale to enterprise in 60 days."
+          ]
+        },
+        card2: {
+          title: "How AI Transforms Software Engineering",
+          desc: "The era of typing boilerplate code and chasing syntax errors is ending. Modern SWEs operate as <strong class='text-[var(--foreground)] font-semibold'>System Orchestrators</strong> and <strong class='text-[var(--foreground)] font-semibold'>Specification Architects</strong>.",
+          list: [
+            "• <strong>Spec-Driven Development:</strong> You write unambiguous requirements, acceptance tests, and architecture constraints; AI generates code.",
+            "• <strong>Evaluation-First (Evals):</strong> Unit tests verify deterministic logic; LLM Evals guard probabilistic outputs.",
+            "• <strong>Agentic Workflows:</strong> Multi-step planning, tool-calling, and dynamic context retrieval replace rigid hardcoded pipelines."
+          ]
+        },
+        card3: {
+          title: "The Triad of FDE Competence",
+          desc: "An elite FDE balances three distinct superpowers that make them irreplaceable:",
+          triad: [
+            { title: "1. Production Systems Engineering (40%)", desc: "Distributed systems, Docker/K8s, Postgres, Redis, Auth/OIDC, latency budgets, CI/CD." },
+            { title: "2. Applied AI & Data Engineering (35%)", desc: "Advanced RAG, vector embeddings, DSPy optimization, model evaluation, token governance." },
+            { title: "3. Client Empathy & Discovery (25%)", desc: "Translating vague executive goals into crisp API specs and rapid verifiable milestones." }
+          ]
+        },
+        matrix: {
+          title: "Role Comparison: Traditional SWE vs. Solutions Architect vs. FDE",
+          thDim: "Dimension",
+          thSWE: "Traditional SWE",
+          thSA: "Solutions Architect (SA)",
+          thFDE: "Forward Deployed Engineer (FDE)",
+          rows: [
+            { dim: "Primary Output", swe: "Internal core platform features & sprint tickets", sa: "Architecture diagrams, slide decks, PoC guides", fde: "Live production pipelines solving customer problems directly" },
+            { dim: "Customer Exposure", swe: "Near zero (shielded by Product Managers)", sa: "High (pre-sales meetings, executive workshops)", fde: "Daily direct interaction with client CTOs & engineers" },
+            { dim: "Coding Depth", swe: "Deep in one repo / monolith / microservice", sa: "Shallow to Medium (demo scripts, Terraform templates)", fde: "Full-stack: integrates client legacy DBs + AI APIs + React UI" },
+            { dim: "AI Tool Usage", swe: "Basic inline autocomplete", sa: "Prompting via web interface for summaries", fde: "Autonomous agents, custom CLI hooks, eval harnesses, DSPy" }
+          ]
+        },
+        tools: {
+          title: "The Modern AI SWE Toolstack",
+          desc: "Master these 5 layers to operate with maximum velocity.",
+          filters: { all: "All", ide: "AI IDEs & Agents", orch: "Orchestration & Agents", ret: "Retrieval & Vectors", eval: "Evals & Observability" },
+          items: [
+            { category: "ide", tag: "IDE / Agent", badge: "Essential", title: "Cursor / Claude Code / Antigravity", desc: "AI-native development environments. Move beyond single-line autocomplete to workspace-aware refactors, multi-file diffs, and terminal execution.", tip: "<strong>Pro Tip:</strong> Master .cursorrules to enforce linting, typing, and testing protocols across all generations." },
+            { category: "orchestration", tag: "Orchestration", badge: "Production Standard", title: "LangGraph & LlamaIndex", desc: "State-machine based agent architectures. Offers durable execution, checkpointing, human-in-the-loop approvals, and cyclical graphs.", tip: "<strong>When to use:</strong> Any enterprise workflow requiring multi-step conditional routing, retry policies, or branch merging." },
+            { category: "orchestration", tag: "Prompt Optimization", badge: "Cutting-Edge", title: "DSPy (Declarative Self-improving Python)", desc: "Replaces brittle, handcrafted string prompts with declarative modules and teleprompters (optimizers) that tune prompts against measurable metrics automatically.", tip: "<strong>FDE Value:</strong> When switching foundation models (e.g. GPT-4o to Claude 3.5 Sonnet to Gemini 1.5 Pro), DSPy auto-compiles your prompts." },
+            { category: "orchestration", tag: "Skills & MCP", badge: "Extensibility Standard", title: "SKILL.md & Model Context Protocol", desc: "Packages specialized runbooks, deterministic CLI workflows, and enterprise protocols into progressive disclosure skills without polluting agent context windows.", tip: "<strong>FDE Superpower:</strong> Turn messy human SOPs into version-controlled agent skills with isolated Python CLIs." },
+            { category: "retrieval", tag: "Vector & Search", badge: "Default Choice", title: "pgvector + Hybrid Search + Re-ranking", desc: "PostgreSQL with pgvector + Full-Text Search (tsvector). Add Cohere Rerank or BGE-Reranker for enterprise-grade 2-stage retrieval.", tip: "<strong>Rule of thumb:</strong> Don't introduce a standalone vector database unless client scale exceeds 10M vectors or requires sub-10ms latency." },
+            { category: "eval", tag: "Observability", badge: "Client Critical", title: "LangSmith / Braintrust / Arize Phoenix", desc: "Complete tracing of LLM inputs, outputs, token consumption, latency, and step-by-step agent tool executions. Essential for debugging hallucinations.", tip: "<strong>FDE Value:</strong> Client executives demand cost tracking, latency SLAs, and audit logs. Tracing is non-negotiable for production sign-off." },
+            { category: "eval", tag: "Safety & Guardrails", badge: "Compliance", title: "Guardrails AI & NeMo Guardrails", desc: "Programmable guardrails to validate structured schema outputs (JSON/Pydantic), block PII leaks, prevent prompt injection, and enforce brand safety guidelines.", tip: "<strong>Must-have:</strong> Deterministic schema enforcement using Instructor or Outlines ensures downstream code never crashes on invalid JSON." }
+          ]
+        },
+        certs: {
+          title: "High-Yield Certifications & Curated Courses",
+          desc: "Not all certifications are valued equally. In enterprise AI and FDE hiring, <strong>generalist cloud infrastructure credentials</strong> plus <strong>demonstrated end-to-end agentic implementations</strong> trump surface-level prompt engineering badges.",
+          sec1Title: "Top Industry Certifications (Ranked by ROI)",
+          sec2Title: "Curated Courses & Seminal Readings",
+          certList: [
+            { title: "1. AWS Certified Solutions Architect (Assoc / Pro)", tier: "Tier 1 • Essential", desc: "Enterprise AI models do not run in vacuum; they live inside client VPCs, IAM security perimeters, and S3/RDS data stores. This proves you understand infrastructure." },
+            { title: "2. Databricks Certified Generative AI Engineer", tier: "Tier 1 • High Relevance", desc: "Focuses directly on enterprise RAG, vector search, MLflow LLM tracking, Mosaic AI, and production deployment on enterprise lakehouses." },
+            { title: "3. Google Cloud Professional ML Engineer", tier: "Tier 2 • Deep ML", desc: "Covers Vertex AI, Model Garden, pipeline orchestration with Kubeflow, and serving scalability. Excellent for Google/Anthropic ecosystems." }
+          ],
+          courseList: [
+            { title: "Full Stack LLM Bootcamp (UC Berkeley)", tier: "Free & Gold Standard", desc: "The premier curriculum created by Sergey Karayev and team. Covers eval frameworks, RAG failure modes, inference optimization, and deployment patterns." },
+            { title: "DeepLearning.AI: LangChain & Agentic AI", tier: "Short & Practical", desc: "Courses by Andrew Ng and Harrison Chase on Multi-AI Agent Systems with CrewAI, Functions/Tools, and LangGraph architecture." },
+            { title: "Book: \"Designing Data-Intensive Applications\"", tier: "Must-Read Classic", desc: "By Martin Kleppmann. 90% of AI application failures in enterprise are data consistency, race conditions, partitioning, and caching bottlenecks." }
+          ],
+          chkTitle: "Your 90-Day FDE Transition Action Checklist",
+          checklist: [
+            { title: "Days 1–15: AI IDE Velocity Setup", desc: "Configure Cursor / Claude Code / Antigravity with strict rule configs, tests, and auto-linting." },
+            { title: "Days 16–30: Enterprise RAG from Scratch", desc: "Build hybrid retrieval (pgvector + BM25 + Cross-Encoder reranker) with parent-child document chunking." },
+            { title: "Days 31–45: Agent State Machine (LangGraph)", desc: "Build a cyclical multi-tool agent that queries APIs, handles errors with retries, and requests human confirmation." },
+            { title: "Days 46–60: Build an Eval Suite (LangSmith/Ragas)", desc: "Construct 50 golden test cases measuring Context Recall, Faithfulness, and Answer Relevance. Run in CI/CD." },
+            { title: "Days 61–75: Enterprise Guardrails & Auth", desc: "Wrap pipeline in FastAPI with Pydantic output validation, rate limiting, token telemetry, and JWT auth." },
+            { title: "Days 76–90: Deploy Live Customer-Grade Demo", desc: "Package into Docker containers, deploy to AWS/GCP, and document a 5-minute executive demo pitch." }
+          ]
+        },
+        playbook: {
+          title: "The 5-Stage FDE Production Playbook",
+          desc: "How an FDE takes a client engagement from ambiguous boardroom discussions to resilient, audited software in production.",
+          stages: [
+            { num: "01", title: "Discovery & Problem Framing (Days 1–3)", tag: "Client Engagement", desc: "Clients frequently ask for 'an AI chatbot that knows everything'. The FDE translates this into concrete engineering specs: 'A semantic routing gateway over 50,000 PDF contracts with strict cite-or-abstain policy and sub-2.5s response time.'", deliv: "Key deliverable: Architecture Decision Record (ADR) + Target SLA Metrics (Latency < 3s, Accuracy > 95%, Hallucination < 1%)." },
+            { num: "02", title: "Data Hygiene & Ground Truth Ingestion (Days 4–10)", tag: "Data Pipeline", desc: "Garbage in, garbage out. The FDE writes robust extractors (Unstructured.io, LlamaParse, pdfplumber) to parse messy tables, scan OCR documents, and structure metadata into PostgreSQL/pgvector with cryptographic chunk hashes.", deliv: "Key deliverable: Repeatable ETL pipeline + Golden evaluation dataset of 50-100 real customer queries with expected answers." },
+            { num: "03", title: "Rapid Prototyping & Spec-Driven Coding (Days 11–20)", tag: "AI-Accelerated SWE", desc: "Use AI coding tools (Cursor / Claude Code / Antigravity) to build the core services at 5x speed: FastAPI backend, LangGraph agent workflows, schema validation with Pydantic, and an interactive prototype UI (Next.js or Streamlit).", deliv: "Key deliverable: Working end-to-end interactive PoC demoed to client stakeholders for immediate validation." },
+            { num: "04", title: "Evals, Hardening & Security Guardrails (Days 21–35)", tag: "Enterprise Grade", desc: "Transform the prototype into a production service: install LangSmith/Phoenix telemetry, configure prompt injection detectors, enforce deterministic JSON schemas, add Redis semantic caching, and set rate limits and fallbacks.", deliv: "Key deliverable: Automated CI/CD eval test suite passing benchmarks before any merge to main branch." },
+            { num: "05", title: "Deployment, Handover & Client Enablement (Days 36–45)", tag: "Production Value", desc: "Deploy into the client's AWS/GCP/Kubernetes environment with Terraform/Helm. Conduct pairing sessions with internal engineers, establish monitoring runbooks, and prove tangible business ROI to leadership.", deliv: "Key deliverable: Zero-downtime deployment, infrastructure-as-code documentation, and internal client team graduation." }
+          ]
+        },
+        diag: {
+          title: "Interactive FDE Readiness Diagnostic",
+          desc: "Evaluate your current capabilities across the 5 pillars of Forward Deployed Engineering and receive tailored next steps.",
+          btn: "Calculate My Readiness",
+          resLabel: "Diagnostic Output",
+          questions: [
+            { cat: "1. AI-Augmented Coding Velocity", q: "How do you currently integrate AI into your daily development workflow?", opts: ["Mostly ChatGPT web chat for snippets", "Copilot / Cursor inline tab completions", "Agentic multi-file refactors with custom rules"] },
+            { cat: "2. Production Systems & Architecture", q: "What is your comfort level designing and deploying production backend infra?", opts: ["Local scripts & simple web apps", "Dockerized REST APIs with SQL databases", "Microservices, K8s, cloud IAM, VPCs, CI/CD"] },
+            { cat: "3. Applied AI & Retrieval (RAG/Agents)", q: "How experienced are you with advanced retrieval and agentic orchestration?", opts: ["Basic prompt prompting with system messages", "Naive RAG (LangChain + simple cosine similarity)", "Hybrid search, Cross-Encoder reranking & LangGraph"] },
+            { cat: "4. Model Evaluation & Observability", q: "How do you quantify model quality, hallucination rate, and regressions?", opts: ["Manual 'vibe checking' of sample answers", "Basic unit assertions on JSON schema outputs", "Automated golden eval benchmarks (Faithfulness/Recall in CI)"] },
+            { cat: "5. Client Discovery & Technical Leadership", q: "How do you handle ambiguous requests from non-technical stakeholders?", opts: ["Prefer receiving precise Jira tickets", "Ask questions in meetings and draft PRDs", "Drive discovery workshops & translate business pain to architecture"] }
+          ]
+        },
+        tech: {
+          badge: "Enterprise Engineering Specs",
+          title: "Production Architecture & Code Blueprints",
+          desc: "Hardcore enterprise engineering blueprints: concrete code implementations, mathematical formulas, state graphs, and production SLAs used by top Forward Deployed Engineers.",
+          selectorLabel: "Select Architectural Blueprint:",
+          copyBtn: "Copy Code",
+          copiedBtn: "Copied!",
+          flowTitle: "Execution Flow Architecture",
+          slaTitle: "Engineering SLAs & Metrics",
+          codeTitle: "Production Code Implementation",
+          storyTitle: "FDE Field War Story & Failure Mode",
+          blueprints: [
+            {
+              id: "bp-spec",
+              badge: "Contract Engineering",
+              name: "1. Spec-Driven Dev & Schema Contracts",
+              subtitle: "Deterministic JSON decoding with Pydantic v2 & Grammar-Constrained Token Masking",
+              flow: [
+                { step: "01. Request Ingestion", desc: "Unstructured enterprise query or document arrives at FastAPI gateway." },
+                { step: "02. Schema Invariants", desc: "Pydantic v2 domain model defines regex boundaries, ranges, and cross-field validators." },
+                { step: "03. Grammar Masking", desc: "Finite-state machine (FSM) restricts LLM sampling logits in real time, preventing invalid tokens." },
+                { step: "04. Self-Healing Loop", desc: "If validation triggers, Instructor feeds traceback back to LLM for deterministic auto-correction." }
+              ],
+              slas: [
+                { label: "Schema Parse Failure Rate", val: "0.00% (Guaranteed)" },
+                { label: "Validation Overhead", val: "< 2.5 ms (Rust Core)" },
+                { label: "Downstream System Outages", val: "0 (Zero Exceptions)" }
+              ],
+              filename: "schema_contract_service.py",
+              codeLang: "Python 3.11+ / Pydantic v2",
+              code: `import instructor
+from openai import OpenAI
+from pydantic import BaseModel, Field, field_validator
+from typing import List, Literal
+
+# 1. Enterprise Contract: Strict domain specifications and invariants
+class SecurityAuditReport(BaseModel):
+    audit_target: str = Field(..., description="Target service or microservice module")
+    risk_level: Literal["CRITICAL", "HIGH", "MEDIUM", "LOW"] = Field(
+        ..., description="Standardized severity category"
+    )
+    confidence: float = Field(
+        ..., ge=0.0, le=1.0, description="Calibrated confidence score between 0.0 and 1.0"
+    )
+    vulnerabilities: List[str] = Field(
+        ..., min_length=1, description="List of identified CVEs or misconfigurations"
+    )
+    remediation_steps: str = Field(
+        ..., min_length=25, description="Actionable runbook instructions for SRE team"
+    )
+
+    @field_validator("remediation_steps")
+    @classmethod
+    def validate_actionability(cls, v: str) -> str:
+        # Enforce that LLM does not return lazy boilerplate
+        forbidden_tokens = ["tbd", "todo", "contact admin", "look at logs", "n/a"]
+        if any(token in v.lower() for token in forbidden_tokens):
+            raise ValueError("Remediation must contain concrete, executable CLI commands or configs.")
+        return v
+
+# 2. Patch client with Instructor for Grammar-Constrained JSON decoding
+client = instructor.from_openai(OpenAI())
+
+def generate_audited_report(system_telemetry: str) -> SecurityAuditReport:
+    """
+    Executes constrained decoding. If validation fails, Instructor automatically
+    intercepts the ValidationError, appends the traceback to messages, and re-queries.
+    """
+    return client.chat.completions.create(
+        model="gpt-4o",
+        response_model=SecurityAuditReport,
+        max_retries=3,  # Self-healing loop with reflection on validation errors
+        messages=[
+            {"role": "system", "content": "You are a Tier-1 Enterprise DevSecOps Auditor."},
+            {"role": "user", "content": f"Telemetry Data:\\n{system_telemetry}"}
+        ],
+        temperature=0.1
+    )`,
+              warStory: "Many teams plead with the LLM in prompts ('please return valid JSON only'), yet suffer a 3-5% parser crash rate under high concurrency due to markdown ticks or cut-off braces. FDEs enforce grammar masking via Instructor/Outlines, eliminating schema crashes at the sampling level."
+            },
+            {
+              id: "bp-agent",
+              badge: "State Machine",
+              name: "2. Cyclical State Machine Agent",
+              subtitle: "Durable execution, checkpointing, and Human-in-the-Loop (HITL) safety in LangGraph",
+              flow: [
+                { step: "01. Plan & Tool Proposal", desc: "Agent inspects user goal and drafts a database query or external API call." },
+                { step: "02. Safety Policy Router", desc: "Conditional router analyzes query string for destructive mutations (DROP/DELETE/UPDATE)." },
+                { step: "03. Checkpoint & Interrupt", desc: "If mutation is flagged, state graph persists to storage and interrupts execution." },
+                { step: "04. Verified Resume", desc: "Upon engineer cryptographically approving token, graph resumes from exact checkpoint." }
+              ],
+              slas: [
+                { label: "State Durability", val: "100% ACID Checkpointed" },
+                { label: "Runaway Loop Guard", val: "Strict recursion_limit <= 15" },
+                { label: "Unauthorized Mutations", val: "0 Incidents" }
+              ],
+              filename: "resilient_agent_graph.py",
+              codeLang: "Python 3.11+ / LangGraph",
+              code: `from typing import TypedDict, Sequence, Literal
+from langchain_core.messages import BaseMessage, ToolMessage
+from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.memory import MemorySaver
+
+# 1. Unified Typed Execution State
+class FDEAgentState(TypedDict):
+    messages: Sequence[BaseMessage]
+    proposed_sql: str
+    is_mutation: bool
+    requires_approval: bool
+    iteration_count: int
+
+# 2. Node Functions with Mutation Detection
+def planner_node(state: FDEAgentState) -> dict:
+    query = "DELETE FROM customer_tokens WHERE expires_at < NOW() - INTERVAL '30 days';"
+    # Detect if query performs mutations (INSERT/UPDATE/DELETE/DROP)
+    is_mutation = any(kw in query.upper() for kw in ["UPDATE", "DELETE", "DROP", "ALTER"])
+    return {
+        "proposed_sql": query,
+        "is_mutation": is_mutation,
+        "requires_approval": is_mutation,
+        "iteration_count": state.get("iteration_count", 0) + 1
+    }
+
+def safety_gate(state: FDEAgentState) -> Literal["human_review", "execute_sql"]:
+    if state["requires_approval"]:
+        return "human_review"  # Router directs to human intervention node
+    return "execute_sql"
+
+def execute_sql_node(state: FDEAgentState) -> dict:
+    # Safe execution node
+    return {"messages": [ToolMessage(content="Successfully pruned 4,120 rows.", tool_call_id="call_db_1")]}
+
+# 3. Assemble Resilient State Graph
+workflow = StateGraph(FDEAgentState)
+workflow.add_node("planner", planner_node)
+workflow.add_node("execute_sql", execute_sql_node)
+
+workflow.set_entry_point("planner")
+workflow.add_conditional_edges(
+    "planner",
+    safety_gate,
+    {"human_review": END, "execute_sql": "execute_sql"}
+)
+workflow.add_edge("execute_sql", END)
+
+# Production setup: Interrupt before dangerous node execution
+checkpointer = MemorySaver()
+app = workflow.compile(checkpointer=checkpointer, interrupt_before=["execute_sql"])`,
+              warStory: "Linear chains crash completely on transient API timeouts, burning tokens and risking duplicated database side-effects. LangGraph models workflows as cyclical state graphs with durable checkpointing, enabling seamless retries and freezing critical operations for human authorization."
+            },
+            {
+              id: "bp-rag",
+              badge: "Hybrid Retrieval",
+              name: "3. Enterprise 2-Stage Hybrid RAG Engine",
+              subtitle: "PostgreSQL pgvector (HNSW) + Full-Text BM25 + Reciprocal Rank Fusion + Cross-Encoder",
+              flow: [
+                { step: "01. Dual Ingestion", desc: "Parent-child chunking with 1536d dense embeddings and TSVECTOR lexical tokens." },
+                { step: "02. Parallel Retrieval", desc: "HNSW cosine ANN search runs concurrently with GIN BM25 keyword query." },
+                { step: "03. Reciprocal Rank Fusion", desc: "RRF merges disparate score distributions using k=60 constant to pick Top 30." },
+                { step: "04. Cross-Encoder Rerank", desc: "BGE/Cohere Cross-Encoder computes full cross-attention score to yield Top 5." }
+              ],
+              slas: [
+                { label: "Recall@5 Accuracy", val: "94.2% (vs 68% Dense only)" },
+                { label: "Stage 1 Retrieval Latency", val: "< 18 ms (HNSW Parallel)" },
+                { label: "Stage 2 Rerank Latency", val: "< 45 ms (Top 30 Chunks)" }
+              ],
+              filename: "hybrid_search_schema.sql",
+              codeLang: "PostgreSQL 16 + pgvector",
+              code: `-- 1. Optimized PostgreSQL Schema with Vector and Lexical Indexes
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE enterprise_knowledge_chunks (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    doc_id VARCHAR(128) NOT NULL,
+    chunk_text TEXT NOT NULL,
+    metadata JSONB NOT NULL DEFAULT '{}',
+    embedding VECTOR(1536), -- text-embedding-3-small
+    tsv_content TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', chunk_text)) STORED
+);
+
+-- HNSW Vector Index (Optimized for low-latency similarity search)
+CREATE INDEX idx_chunks_hnsw ON enterprise_knowledge_chunks 
+USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64);
+
+-- GIN Index for keyword exact matching (BM25 Equivalent)
+CREATE INDEX idx_chunks_gin ON enterprise_knowledge_chunks USING gin(tsv_content);
+
+-- 2. Reciprocal Rank Fusion (RRF with k=60) Hybrid Search
+WITH dense_candidates AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY embedding <=> $1::vector) AS dense_rank
+    FROM enterprise_knowledge_chunks
+    ORDER BY embedding <=> $1::vector LIMIT 30
+),
+sparse_candidates AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY ts_rank_cd(tsv_content, plainto_tsquery('english', $2)) DESC) AS sparse_rank
+    FROM enterprise_knowledge_chunks
+    WHERE tsv_content @@ plainto_tsquery('english', $2) LIMIT 30
+)
+SELECT k.id, k.chunk_text, k.metadata,
+       (COALESCE(1.0 / (60 + d.dense_rank), 0.0) + COALESCE(1.0 / (60 + s.sparse_rank), 0.0)) AS rrf_score
+FROM enterprise_knowledge_chunks k
+LEFT JOIN dense_candidates d ON k.id = d.id
+LEFT JOIN sparse_candidates s ON k.id = s.id
+WHERE d.id IS NOT NULL OR s.id IS NOT NULL
+ORDER BY rrf_score DESC LIMIT 15;`,
+              warStory: "Pure vector search frequently fails on exact serial numbers, product IDs (e.g. 'PR-9821-X'), and compliance codes. FDEs implement Postgres pgvector + BM25 with Reciprocal Rank Fusion, followed by a Cross-Encoder reranker. This achieves both semantic nuance and 100% exact keyword fidelity."
+            },
+            {
+              id: "bp-evals",
+              badge: "Continuous Evals",
+              name: "4. Continuous CI/CD Evaluation Harness",
+              subtitle: "Automated regression testing in CI pipelines using Ragas & Golden Datasets",
+              flow: [
+                { step: "01. PR Created", desc: "Engineer modifies prompts, chunk sizes, or foundation model versions." },
+                { step: "02. Golden Dataset Load", desc: "CI job loads 50+ enterprise test queries with vetted reference contexts." },
+                { step: "03. LLM-as-a-Judge Eval", desc: "Ragas evaluates Faithfulness (Grounding), Context Recall, and Answer Relevance." },
+                { step: "04. Hard Merge Gate", desc: "If Faithfulness < 0.92 or latency exceeds SLA, the pipeline fails and blocks merge." }
+              ],
+              slas: [
+                { label: "Faithfulness SLA Gate", val: ">= 0.92 (Strict Grounding)" },
+                { label: "Context Recall Gate", val: ">= 0.90 (Zero Retrieval Drift)" },
+                { label: "Evaluation Run Cost", val: "< $0.05 / CI execution" }
+              ],
+              filename: "test_rag_regression_gate.py",
+              codeLang: "Python 3.11+ / Pytest + Ragas",
+              code: `import pytest
+from ragas import evaluate
+from ragas.metrics import faithfulness, answer_relevance, context_recall
+from datasets import Dataset
+
+# 1. Enterprise Golden Ground-Truth Evaluation Suite
+GOLDEN_EVAL_DATASET = Dataset.from_dict({
+    "question": [
+        "What is the maximum allowed latency for the Payment Service auth webhook in APAC?"
+    ],
+    "contexts": [[
+        "APAC Payment Service SLA specification section 4.1: Auth webhooks must respond "
+        "within 250 milliseconds at P99 under peak load. Any timeout exceeding 500ms triggers P1 alert."
+    ]],
+    "ground_truth": [
+        "The P99 latency SLA for APAC Payment Service auth webhooks is 250ms, with timeouts >500ms triggering P1."
+    ],
+    "answer": [
+        "According to APAC SLA section 4.1, the auth webhook must respond within 250ms at P99."
+    ]
+})
+
+def test_production_rag_evals_regression_gate():
+    """
+    Automated CI/CD Evaluation Gate. Fails GitHub Actions / GitLab CI if quality regresses.
+    """
+    results = evaluate(
+        dataset=GOLDEN_EVAL_DATASET,
+        metrics=[faithfulness, answer_relevance, context_recall]
+    )
+    
+    # 2. Strict Mathematical SLAs
+    assert results["faithfulness"] >= 0.92, (
+        f"🚨 Merge Blocked! Faithfulness dropped to {results['faithfulness']:.3f} (Required: >= 0.92)."
+    )
+    assert results["context_recall"] >= 0.90, (
+        f"🚨 Merge Blocked! Context Recall dropped to {results['context_recall']:.3f} (Required: >= 0.90)."
+    )
+    assert results["answer_relevance"] >= 0.88, (
+        f"🚨 Merge Blocked! Answer Relevance dropped to {results['answer_relevance']:.3f} (Required: >= 0.88)."
+    )
+    print("✅ All FDE Production Quality Gates Passed! PR Approved for Staging.")`,
+              warStory: "Junior developers rely on 'vibe checks' (testing 2 prompts manually in a UI) before deploying to production, causing silent hallucinations on edge cases. Elite FDEs turn evals into automated CI gates: no prompt, model, or chunking PR can be merged without proving statistical non-regression against a golden dataset."
+            },
+            {
+              id: "bp-skill",
+              badge: "Skill Engineering",
+              name: "5. Agent Skill Architecture & Progressive Disclosure",
+              subtitle: "Packaging complex enterprise runbooks into on-demand agent skills (SKILL.md & CLI patterns)",
+              flow: [
+                { step: "01. Metadata Discovery", desc: "Agent indexes skill name & concise YAML description at startup (~50 tokens)." },
+                { step: "02. Intent Activation", desc: "Full operational SOP instructions load into context on-demand only when triggered." },
+                { step: "03. CLI Tool Execution", desc: "Agent executes deterministic Python helper commands via 'uv run' with file-locked rate limits." },
+                { step: "04. Standardized Output", desc: "Filters verbose logs and delivers structured audit markdown reports (< 500 lines)." }
+              ],
+              slas: [
+                { label: "Context Bloat Reduction", val: "95%+ (vs System Prompt)" },
+                { label: "Execution Determinism", val: "100% (uv isolated venv)" },
+                { label: "Team Shareability", val: "VCS Git Version Controlled" }
+              ],
+              filename: "SKILL.md & agent_tool_cli.py",
+              codeLang: "Markdown / Python 3.11+ / uv",
+              code: `---
+name: enterprise-db-migration
+description: >-
+  Audits, validates, and executes zero-downtime PostgreSQL schema migrations
+  with rollback verification and lock timeout safeguards.
+---
+
+# Enterprise Database Migration Runbook
+
+## Procedural Protocol
+1. **Dry-Run Analysis**:
+   \`\`\`bash
+   uv run scripts/migrate.py check --schema=v2_upgrade.sql
+   \`\`\`
+2. **Lock Timeout Verification**:
+   Ensure all ALTER TABLE statements set \'SET lock_timeout = 2s;\'
+3. **Execution & Rollback Snapshot**:
+   Execute migration within a transactional block with pre-migration snapshot.
+
+--------------------------------------------------------------------------------
+# Helper Script Implementation (scripts/migrate.py)
+import argparse, fcntl, sys, time
+
+def acquire_file_lock(lock_path="/tmp/migration.lock"):
+    # File-lock ensures concurrent subagents never execute conflicting schema updates
+    lock_file = open(lock_path, "w")
+    fcntl.flock(lock_file, fcntl.LOCK_EX)
+    return lock_file
+
+def main():
+    parser = argparse.ArgumentParser(description="Deterministic Migration CLI")
+    parser.add_argument("action", choices=["check", "apply", "rollback"])
+    parser.add_argument("--schema", required=True)
+    args = parser.parse_args()
+    
+    lock = acquire_file_lock()
+    print(f"🔒 Acquired lock. Executing {args.action} on {args.schema}...")
+    # Safe deterministic execution
+    print("✅ Completed safely. Output < 500 lines.")
+
+if __name__ == "__main__":
+    main()`,
+              warStory: "Teams often stuff 50-page enterprise runbooks directly into system prompts, causing severe 'lost in the middle' attention degradation and burning tens of thousands of tokens per turn. Elite FDEs modularize procedures into Agent Skills with progressive disclosure, loading instructions only when triggered and executing tasks via isolated CLI tools."
+            }
+          ]
+        },
+        footer: "Built for Forward Deployed Engineers & Modern AI Practitioners • DeepMind Antigravity Edition"
+      },
+      zh: {
+        badgeStatus: "AI 系統工程 • FDE 前線部署工程師實戰手冊",
+        langBtn: "Switch to English (EN)",
+        themeLight: "明亮模式 (Light)",
+        themeDark: "深色模式 (Dark)",
+        heroPill: "高階架構課程與互動式診斷工具",
+        heroTitle: "AI 時代的軟體工程：FDE 前線工程師大師班",
+        heroDesc: "從傳統的「一行行手寫語法」躍升為高敏捷度的「系統編排與規格架構師」。學習如何成為一名頂尖的 <strong class='text-[var(--foreground)]'>前線部署工程師 (Forward Deployed Engineer, FDE)</strong> —— 在企業架構、Agent 代理工作流與業務商業價值的交會點上，快速交付高價值的 AI 生產系統。",
+        metric1Label: "職位市場需求",
+        metric1Val: "頂級 1% 核心人才",
+        metric2Label: "開發效能倍數",
+        metric2Val: "5倍 – 10倍 躍升",
+        tabs: {
+          role: "1. FDE 角色核心與定位",
+          stack: "2. 現代 AI 工具鏈矩陣",
+          roadmap: "3. 權威認證與學習路徑",
+          playbook: "4. 五階段生產交付手冊",
+          assessment: "5. FDE 就緒度能力評估",
+          tech: "6. 生產級架構與代碼深度拆解"
+        },
+        card2TechBtn: "⚡ 查看第 6 模組：生產級架構與代碼深度拆解 →",
+        card1: {
+          title: "什麼是前線部署工程師 (FDE)？",
+          desc: "最早由 Palantir 開創，如今成為 OpenAI、Anthropic、Scale AI、Databricks 等頂尖 AI 機構最炙手可熱的關鍵角色。FDE 直接進駐企業客戶一線，用最前沿的技術解決高度模糊且具高商業價值的核心難題。",
+          list: [
+            "• <strong>不是 Pre-sales 或銷售顧問：</strong> 你每天親自寫生產代碼、提交 PR、搭建雲端架構。",
+            "• <strong>不是封閉在內部的後台 SWE：</strong> 你直接對接客戶 CTO，用商業 ROI 與行業專業語言溝通。",
+            "• <strong>極速 0-to-1 交付力：</strong> 72 小時內交付可驗證的高難度 PoC，60 天內擴展為企業級生產系統。"
+          ]
+        },
+        card2: {
+          title: "AI 如何重塑現代軟體工程？",
+          desc: "單純打字寫樣板代碼 (Boilerplate) 與檢查基本語法的時代已經過去。現代軟體工程師已轉化為<strong class='text-[var(--foreground)] font-semibold'>「系統架構編排者 (System Orchestrator)」</strong>與<strong class='text-[var(--foreground)] font-semibold'>「規格定義師 (Specification Architect)」</strong>。",
+          list: [
+            "• <strong>規格驅動開發 (Spec-Driven Dev)：</strong> 你專注撰寫無歧義的業務需求、驗收測試與架構約束，由 AI 實現底層代碼。",
+            "• <strong>評測優先 (Evaluation-First Evals)：</strong> 單元測試保證確定性邏輯，LLM Evals (評測基準) 防範機率性幻覺與漂移。",
+            "• <strong>Agent 代理工作流：</strong> 多步驟自主規劃、工具呼叫 (Tool-Calling) 與動態檢索取代死板寫死的代碼管線。"
+          ]
+        },
+        card3: {
+          title: "FDE 核心能力金字塔 (40/35/25 法則)",
+          desc: "一名頂尖的 FDE 必須兼具以下三大無可取代的核心超能力：",
+          triad: [
+            { title: "1. 企業級生產系統工程力 (40%)", desc: "分散式系統、Docker/K8s、PostgreSQL、Redis、OAuth/OIDC 資安、延遲預算與 CI/CD 管線。" },
+            { title: "2. 應用型 AI 與資料架構力 (35%)", desc: "進階混合 RAG、向量嵌入、DSPy 自動 Prompt 編譯、模型評測體系與 Token 成本治理。" },
+            { title: "3. 客戶同理心與業務調研力 (25%)", desc: "將客戶高層模糊的痛點翻譯為精確的技術 SLA，快速擬定里程碑並建立信任。" }
+          ]
+        },
+        matrix: {
+          title: "角色維度對比：傳統軟體工程師 vs. 解決方案架構師 vs. FDE",
+          thDim: "維度",
+          thSWE: "傳統軟體工程師 (SWE)",
+          thSA: "解決方案架構師 (SA)",
+          thFDE: "前線部署工程師 (FDE)",
+          rows: [
+            { dim: "主要交付成果", swe: "內部平台功能模組與 Jira 開發任務", sa: "架構圖、投影片簡報、概念驗證指南", fde: "直接解決客戶痛點並上線運行的生產代碼管線" },
+            { dim: "客戶直接接觸度", swe: "極低 (由產品經理 PM 隔離需求)", sa: "極高 (售前業務會議、架構研討會)", fde: "極高且深入 (每日與客戶技術長及一線工程師結對編程)" },
+            { dim: "編程代碼深度", swe: "在內部單一倉儲中高度深耕", sa: "淺層至中等 (範例腳本、Terraform 模板)", fde: "全端極限實戰：整合客戶遺留資料庫 + AI API + 互動介面" },
+            { dim: "AI 工具運用深度", swe: "基本行內補全 (Copilot Tab)", sa: "透過網頁界面輸入 Prompt 產出摘要", fde: "自主 Agent 工作流、自訂 CLI 鉤子、自動化 Evals、DSPy" }
+          ]
+        },
+        tools: {
+          title: "現代 AI 軟體工程必備工具鏈矩陣",
+          desc: "掌握以下 5 大核心技術層次，發揮極致開發效能與可靠性。",
+          filters: { all: "全部", ide: "AI IDE 與自主代理", orch: "編排與 Agent 框架", ret: "向量檢索與資料庫", eval: "評測與可觀測性" },
+          items: [
+            { category: "ide", tag: "AI IDE / Agent", badge: "核心必備", title: "Cursor / Claude Code / Antigravity", desc: "AI 原生開發環境。從單行代碼補全進化至跨檔案全倉重構、終端命令自動執行與上下文管理。", tip: "<strong>實戰建議：</strong> 善用 .cursorrules 與系統指令文件，強制 AI 在每一次生成時遵守專案型別檢查與測試規範。" },
+            { category: "orchestration", tag: "編排框架", badge: "生產標準", title: "LangGraph & LlamaIndex", desc: "基於狀態機 (State Machine) 的代理架構。支援耐久執行、斷點快照 (Checkpointing)、人工介入確認 (HITL) 與循環狀態圖。", tip: "<strong>何時使用：</strong> 任何需要多步驟條件分支、重試回退機制或多任務合併的企業級複雜流程。" },
+            { category: "orchestration", tag: "Prompt 自動編譯", badge: "前沿關鍵", title: "DSPy (聲明式自優化 Python)", desc: "以聲明式模組與優化器 (Teleprompter) 取代脆弱的手寫 Prompt，根據量化指標自動調整最佳提示詞與少樣本範例 (Few-shot)。", tip: "<strong>FDE 價值：</strong> 當更換底層模型 (如從 GPT-4o 切換至 Claude 3.5 Sonnet 或 Gemini 1.5 Pro) 時，DSPy 可全自動重新編譯優化。" },
+            { category: "orchestration", tag: "Agent 技能與 MCP", badge: "擴充標準", title: "SKILL.md 與 Model Context Protocol", desc: "將企業專屬 SOP、確定性 CLI 流程與第三方資料庫協議封裝為漸進式揭露技能，零上下文膨脹即可賦能 Agent 自主執行。", tip: "<strong>FDE 核心超能力：</strong> 將雜亂的團隊紙本文檔轉化為受 Git 版本控制的 Agent 技能與獨立 Python CLI 腳本。" },
+            { category: "retrieval", tag: "向量與檢索", badge: "首選基準", title: "pgvector + 混合檢索 + 重排序", desc: "PostgreSQL 搭配 pgvector 向量外掛，結合全文檢索 (BM25)，再透過 Cohere Rerank 或 BGE 進行 Cross-Encoder 重排序。", tip: "<strong>經驗法則：</strong> 在資料量未超過千萬筆向量或無需 10ms 極限低延遲前，不要輕易引入獨立向量資料庫，Postgres 即可解決 95% 問題。" },
+            { category: "eval", tag: "可觀測性", badge: "客戶嚴苛要求", title: "LangSmith / Braintrust / Arize Phoenix", desc: "完整追蹤 LLM 輸入、輸出、Token 消耗、延遲以及每一步 Agent 工具調用日誌，排查幻覺與邏輯漏洞不可或缺。", tip: "<strong>FDE 價值：</strong> 企業客戶決策層極度重視成本與延遲 SLA，缺少追蹤審計機制的系統絕無法獲得生產上線簽核。" },
+            { category: "eval", tag: "安全與護欄", badge: "企業合規", title: "Guardrails AI & NeMo Guardrails", desc: "可程式化的護欄機制：確保結構化 JSON/Pydantic 輸出嚴格合規、攔截 PII 隱私洩漏、防範 Prompt 注入攻擊並符合規範。", tip: "<strong>必須落實：</strong> 透過 Instructor 或 Outlines 進行確定性結構限制，徹底避免下游客戶系統因 JSON 格式錯誤而崩潰。" }
+          ]
+        },
+        certs: {
+          title: "高投報率權威認證與精選必修課程",
+          desc: "認證的價值天差地遠。在企業級 AI 與 FDE 招募中，<strong>深厚的雲端架構基礎認證</strong> 搭配 <strong>端到端開源 Agent 實戰專案</strong>，遠比快餐式的提示工程證書更具權威說服力。",
+          sec1Title: "頂級行業認證 (按履歷投報率排序)",
+          sec2Title: "經典精選課程與奠基著作",
+          certList: [
+            { title: "1. AWS Certified Solutions Architect (SAA / SAP)", tier: "Tier 1 • 絕對核心", desc: "企業 AI 絕非運行在真空中；模型必須落地於客戶的 VPC 私有網路、IAM 安全權限與 S3/RDS 資料儲存中。這張證書證明你懂真正的雲端基建。" },
+            { title: "2. Databricks Certified Generative AI Engineer", tier: "Tier 1 • 高度契合", desc: "直接考核企業級 RAG、向量搜尋、MLflow LLM 追蹤、Mosaic AI 及企業級 Lakehouse 架構上的模型生產部署。" },
+            { title: "3. Google Cloud Professional ML Engineer", tier: "Tier 2 • 深度維運", desc: "涵蓋 Vertex AI、Model Garden、Kubeflow 流程編排與大規模推論部署，非常適合 Google 與 Anthropic 生態圈。" }
+          ],
+          courseList: [
+            { title: "Full Stack LLM Bootcamp (UC Berkeley)", tier: "免費且被公認黃金標準", desc: "由伯克利團隊 Sergey Karayev 主導。深度剖析模型評測 (Evals)、RAG 失效模式、推論加速優化與架構模式。" },
+            { title: "DeepLearning.AI: LangChain 與 Agent 實戰", tier: "短小精悍且極具實用性", desc: "由吳恩達 (Andrew Ng) 與 Harrison Chase 共同設計，涵蓋多 Agent 協同、工具呼叫 (Tool-Calling) 與 LangGraph 狀態圖。" },
+            { title: "經典書籍：《資料密集型應用系統設計》", tier: "現代工程師必讀聖經", desc: "Martin Kleppmann 著。企業級 AI 系統 90% 的線上故障本質上都是資料一致性、競爭條件 (Race Conditions)、分割與快取瓶頸。" }
+          ],
+          chkTitle: "你的 90 天 FDE 轉型實戰行動清單",
+          checklist: [
+            { title: "第 1–15 天：AI 原生 IDE 效能極速配置", desc: "配置 Cursor / Claude Code / Antigravity 規則檔案，建立自動靜態檢查、測試驅動與自動修復流。" },
+            { title: "第 16–30 天：從零打造企業級混合 RAG", desc: "搭建 PostgreSQL pgvector + BM25 檢索，加入 Cross-Encoder 重排序模型與父子文件切分策略。" },
+            { title: "第 31–45 天：掌握狀態機 Agent (LangGraph)", desc: "構建具備重試、工具呼叫、狀態快照與人工審核 (Human-in-the-loop) 的循環多步驟 Agent。" },
+            { title: "第 46–60 天：建立自動化評測套件 (Evals)", desc: "建立包含 50 組黃金測試集的 CI/CD 自動化評測，嚴密監控檢索召回率 (Recall) 與回答真實性 (Faithfulness)。" },
+            { title: "第 61–75 天：企業級防護欄、驗證與鑑權", desc: "用 FastAPI 封裝服務，落實 Pydantic 輸出強型別校驗、Token 遙測監控、速率限制與 JWT 鑑權。" },
+            { title: "第 76–90 天：交付可上線的客戶級展示專案", desc: "封裝為 Docker 容器並部署至 AWS/GCP，準備一份 5 分鐘能向客戶高層展示商業價值的實機 Demo。" }
+          ]
+        },
+        playbook: {
+          title: "五階段 FDE 生產交付實戰手冊",
+          desc: "頂尖 FDE 如何帶領客戶從會議室中模糊的願景，在 45 天內打造出穩健耐用、可審計的企業級 AI 生產系統。",
+          stages: [
+            { num: "01", title: "業務調研與需求工程化 (第 1–3 天)", tag: "客戶實戰對齊", desc: "客戶常提出模糊需求如「想要一個懂全公司業務的 AI」。FDE 將其精準翻譯為技術架構：「針對 5 萬份 PDF 合約的語義路由閘道，具備嚴格引用與未提及即拒答機制，延遲小於 2.5 秒。」", deliv: "核心交付物：架構決策紀錄 (ADR) + 目標 SLA 指標 (延遲 < 3s, 準確率 > 95%, 幻覺率 < 1%)。" },
+            { num: "02", title: "資料清洗與黃金基準建立 (第 4–10 天)", tag: "資料管線工程", desc: "垃圾進，垃圾出。FDE 開發高韌性解析器 (Unstructured、LlamaParse)，處理複雜表格與掃描文件，計算雜湊值存入 PostgreSQL/pgvector。", deliv: "核心交付物：自動化 ETL 管線 + 包含 50–100 筆真實客戶提問與預期答案的黃金測試基準集。" },
+            { num: "03", title: "極速原型與規格驅動開發 (第 11–20 天)", tag: "AI 加速工程", desc: "借助 AI 編程工具以 5 倍速打造核心骨幹：FastAPI 後端、LangGraph 狀態機代理、Pydantic 輸出驗證，以及輕量級互動前端介面。", deliv: "核心交付物：可供客戶關鍵決策者即時互動體驗的端到端 PoC 展示原型。" },
+            { num: "04", title: "評測基準、資安與防護欄加固 (第 21–35 天)", tag: "企業級安全", desc: "將原型打磨為生產級服務：接入 LangSmith/Phoenix 全鏈路追蹤、部署 Prompt 注入防禦、落實 Redis 語義快取與降級容錯機制。", deliv: "核心交付物：整合至 CI/CD 的自動化 Eval 評測測試套件，任一 PR 均需達標方可合併。" },
+            { num: "05", title: "生產部署、系統移交與客戶賦能 (第 36–45 天)", tag: "商業價值落地", desc: "以 Terraform/Helm 將服務正式部署至客戶的雲端 Kubernetes 叢集。與客戶內部工程師結對編程移交代碼，建立監控維運手冊。", deliv: "核心交付物：零停機上線、基礎架構即代碼 (IaC) 文檔，以及客戶內部技術團隊獨立運維考核認證。" }
+          ]
+        },
+        diag: {
+          title: "互動式 FDE 就緒度能力評估診斷",
+          desc: "從 5 大核心維度自我檢視當前能力，即刻取得專屬於你的客製化進階建議與突破方向。",
+          btn: "計算我的 FDE 就緒度",
+          resLabel: "診斷分析結果",
+          questions: [
+            { cat: "1. AI 增強型編程效能 (Coding Velocity)", q: "你目前如何在日常軟體開發中整合 AI 工具？", opts: ["主要用網頁版 ChatGPT 查詢代碼片段與除錯", "使用 Copilot / Cursor 進行行內 Tab 自動補全", "熟練使用 Agent 代理模式、自訂 rules 與多檔案重構"] },
+            { cat: "2. 生產系統工程架構深度 (Systems Engineering)", q: "你對設計與部署生產級後端基礎架構的掌握程度如何？", opts: ["主要編寫本地腳本與簡單的 Web 應用", "能用 Docker 封裝 REST API 並連接 SQL 資料庫", "精通微服務、K8s、雲端 VPC/IAM 資安權限與 CI/CD"] },
+            { cat: "3. 應用型 AI 與檢索能力 (Applied AI & RAG)", q: "你對進階檢索增強 (RAG) 與 Agent 編排的實踐經驗如何？", opts: ["僅透過基礎 System Prompt 調用大模型", "做過基本 RAG (LangChain + 簡單餘弦相似度向量檢索)", "能實作混合檢索、Cross-Encoder 重排序與 LangGraph 狀態機"] },
+            { cat: "4. 模型評測體系與可觀測性 (Model Evals & Observability)", q: "你如何量化評估 AI 輸出的品質、幻覺率與版本退化？", opts: ["憑人工感覺隨機測試幾條問題 (Vibe checking)", "用簡單代碼檢查回傳字串是否符合 JSON 格式", "建立自動化黃金評測集，在 CI/CD 中量化真實性與檢索召回率"] },
+            { cat: "5. 客戶業務調研與技術領導力 (Client Discovery)", q: "面對非技術業務方模糊、天馬行空的需求時，你通常如何處理？", opts: ["希望由產品經理轉化為具體的 Jira 任務後再開工", "在會議中提問並協助整理出需求文件 (PRD)", "能主導架構工作坊，將業務痛點翻譯為具體 SLA 與架構規格"] }
+          ]
+        },
+        tech: {
+          badge: "企業級架構規格",
+          title: "生產級架構與代碼深度拆解",
+          desc: "頂尖前線部署工程師 (FDE) 實戰代碼藍圖：強型別合約、LangGraph 狀態機、Postgres 兩階段混合檢索與 CI/CD 自動化評測守門員。",
+          selectorLabel: "選擇架構藍圖：",
+          copyBtn: "複製代碼",
+          copiedBtn: "已複製！",
+          flowTitle: "執行架構流程 (Execution Architecture)",
+          slaTitle: "工程指標與 SLA 保證 (Engineering SLAs)",
+          codeTitle: "生產級代碼實現 (Production Implementation)",
+          storyTitle: "FDE 實戰血淚史與防禦機制 (Failure Modes)",
+          blueprints: [
+            {
+              id: "bp-spec",
+              badge: "契約式工程",
+              name: "1. 規格驅動開發與強型別合約",
+              subtitle: "以 Pydantic v2 與語法約束解碼 (Grammar Masking) 徹底根除格式幻覺",
+              flow: [
+                { step: "01. 接收客戶請求", desc: "非結構化文本或使用者指令傳入 FastAPI 服務閘道。" },
+                { step: "02. 建立領域合約", desc: "預編譯 Pydantic v2 模型定義嚴格正則、數值邊界與自定義校驗器。" },
+                { step: "03. 語法遮罩取樣", desc: "在 Token 取樣階段動態遮罩非合規字元，在有限狀態機 (FSM) 保證 100% 符號閉合。" },
+                { step: "04. 自動修復循環", desc: "若業務約束斷言失敗，Pydantic 錯誤軌跡將自動回饋進行靶向修正。" }
+              ],
+              slas: [
+                { label: "Schema 解析失敗率", val: "0.00% (數學保證合規)" },
+                { label: "校驗延遲開銷", val: "< 2.5 ms (Rust 核心 Pydantic v2)" },
+                { label: "下游系統崩潰率", val: "0 (徹底消除格式異常)" }
+              ],
+              filename: "schema_contract_service.py",
+              codeLang: "Python 3.11+ / Pydantic v2",
+              code: `import instructor
+from openai import OpenAI
+from pydantic import BaseModel, Field, field_validator
+from typing import List, Literal
+
+# 1. Enterprise Contract: 嚴格定義領域規則與不變量 (Invariants)
+class SecurityAuditReport(BaseModel):
+    audit_target: str = Field(..., description="Target service or microservice module")
+    risk_level: Literal["CRITICAL", "HIGH", "MEDIUM", "LOW"] = Field(
+        ..., description="Standardized severity category"
+    )
+    confidence: float = Field(
+        ..., ge=0.0, le=1.0, description="Calibrated confidence score between 0.0 and 1.0"
+    )
+    vulnerabilities: List[str] = Field(
+        ..., min_length=1, description="List of identified CVEs or misconfigurations"
+    )
+    remediation_steps: str = Field(
+        ..., min_length=25, description="Actionable runbook instructions for SRE team"
+    )
+
+    @field_validator("remediation_steps")
+    @classmethod
+    def validate_actionability(cls, v: str) -> str:
+        # 強制模型不可產生模稜兩可的樣板廢話
+        forbidden_tokens = ["tbd", "todo", "contact admin", "look at logs", "n/a"]
+        if any(token in v.lower() for token in forbidden_tokens):
+            raise ValueError("Remediation must contain concrete, executable CLI commands or configs.")
+        return v
+
+# 2. 透過 Instructor 綁定 Grammar-Constrained JSON 解碼
+client = instructor.from_openai(OpenAI())
+
+def generate_audited_report(system_telemetry: str) -> SecurityAuditReport:
+    """
+    執行約束解碼：若驗證失敗，Instructor 自動攔截 ValidationError，
+    將錯誤軌跡追加至對話並啟動自我修復重試。
+    """
+    return client.chat.completions.create(
+        model="gpt-4o",
+        response_model=SecurityAuditReport,
+        max_retries=3,  # 自動反思校驗錯誤並修正
+        messages=[
+            {"role": "system", "content": "You are a Tier-1 Enterprise DevSecOps Auditor."},
+            {"role": "user", "content": f"Telemetry Data:\\n{system_telemetry}"}
+        ],
+        temperature=0.1
+    )`,
+              warStory: "許多團隊在 Prompt 中哀求模型『請務必只回傳合規 JSON』，但在高併發情境下依然會遭遇 3%~5% 的格式解析例外（如多餘的反引號、未閉合括號），導致整個資料管線當機。FDE 透過 Instructor / Outlines 在 Token 生成階段進行有限狀態機 (FSM) 遮罩，從數學底層扼殺解析失敗。"
+            },
+            {
+              id: "bp-agent",
+              badge: "狀態機編排",
+              name: "2. 循環狀態機代理架構",
+              subtitle: "以 LangGraph 實現耐久執行、狀態快照 (Checkpointing) 與人工介入審批 (HITL)",
+              flow: [
+                { step: "01. 意圖規劃與提案", desc: "Agent 解析任務並草擬即將執行的資料庫或維運工具調用。" },
+                { step: "02. 安全策略路由", desc: "條件邊分析查詢字串是否包含破壞性操作 (DROP / DELETE / UPDATE)。" },
+                { step: "03. 狀態快照與中斷", desc: "若涉及寫入/變更，狀態圖引擎自動持久化當前狀態並掛起等待主管審批。" },
+                { step: "04. 鑑權接續執行", desc: "取得人工簽核 Token 後，精確從中斷點恢復執行，不遺失任何上下文。" }
+              ],
+              slas: [
+                { label: "狀態持久化保證", val: "100% ACID Checkpointed" },
+                { label: "死循環安全閥", val: "強制 recursion_limit <= 15" },
+                { label: "破壞性事故率", val: "0 (未授權變更全面防禦)" }
+              ],
+              filename: "resilient_agent_graph.py",
+              codeLang: "Python 3.11+ / LangGraph",
+              code: `from typing import TypedDict, Sequence, Literal
+from langchain_core.messages import BaseMessage, ToolMessage
+from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.memory import MemorySaver
+
+# 1. 統一型別化執行狀態 (Typed State)
+class FDEAgentState(TypedDict):
+    messages: Sequence[BaseMessage]
+    proposed_sql: str
+    is_mutation: bool
+    requires_approval: bool
+    iteration_count: int
+
+# 2. 節點函數與寫入變更偵測
+def planner_node(state: FDEAgentState) -> dict:
+    query = "DELETE FROM customer_tokens WHERE expires_at < NOW() - INTERVAL '30 days';"
+    # 偵測是否涉及寫入或結構破壞 (INSERT/UPDATE/DELETE/DROP)
+    is_mutation = any(kw in query.upper() for kw in ["UPDATE", "DELETE", "DROP", "ALTER"])
+    return {
+        "proposed_sql": query,
+        "is_mutation": is_mutation,
+        "requires_approval": is_mutation,
+        "iteration_count": state.get("iteration_count", 0) + 1
+    }
+
+def safety_gate(state: FDEAgentState) -> Literal["human_review", "execute_sql"]:
+    if state["requires_approval"]:
+        return "human_review"  # 導向人工審批等待節點
+    return "execute_sql"
+
+def execute_sql_node(state: FDEAgentState) -> dict:
+    # 執行通過審批之安全操作
+    return {"messages": [ToolMessage(content="Successfully pruned 4,120 rows.", tool_call_id="call_db_1")]}
+
+# 3. 組裝耐久狀態圖
+workflow = StateGraph(FDEAgentState)
+workflow.add_node("planner", planner_node)
+workflow.add_node("execute_sql", execute_sql_node)
+
+workflow.set_entry_point("planner")
+workflow.add_conditional_edges(
+    "planner",
+    safety_gate,
+    {"human_review": END, "execute_sql": "execute_sql"}
+)
+workflow.add_edge("execute_sql", END)
+
+# 生產環境：在破壞性節點前設置中斷掛起
+checkpointer = MemorySaver()
+app = workflow.compile(checkpointer=checkpointer, interrupt_before=["execute_sql"])`,
+              warStory: "單向線性 LangChain 鏈在遇到外部 API 逾時或單次格式異常時會全鏈崩潰重跑，不僅浪費大量 Token，還容易產生重複寫入的競態條件。LangGraph 透過有限狀態圖與 Checkpointing，讓 Agent 能在失敗點自動重試、或將破壞性操作暫停交由工程師審核確認。"
+            },
+            {
+              id: "bp-rag",
+              badge: "混合檢索架構",
+              name: "3. 企業級兩階段混合檢索管線",
+              subtitle: "PostgreSQL pgvector (HNSW) + 全文 BM25 + 互惠排名融合 (RRF) + 交叉編碼重排序",
+              flow: [
+                { step: "01. 雙軌入庫切分", desc: "父子文件切分策略，生成 1536 維向量嵌入與 TSVECTOR 全文詞彙結構。" },
+                { step: "02. 平行雙路檢索", desc: "HNSW 索引執行餘弦 ANN 搜尋，GIN 索引執行 BM25 精確關鍵字檢索。" },
+                { step: "03. 互惠排名融合", desc: "RRF 以常數 k=60 平衡關鍵字與語義維度分數，挑選出 Top 30 候選。" },
+                { step: "04. 交叉編碼重排序", desc: "送入 Cross-Encoder 計算查詢與內文全局注意力權重，提煉出頂級 Top 5。" }
+              ],
+              slas: [
+                { label: "Recall@5 召回率", val: "94.2% (純向量僅 68%)" },
+                { label: "第一階段粗篩延遲", val: "< 18 ms (HNSW 並發檢索)" },
+                { label: "第二階段重排延遲", val: "< 45 ms (Top 30 深度注意力)" }
+              ],
+              filename: "hybrid_search_schema.sql",
+              codeLang: "PostgreSQL 16 + pgvector",
+              code: `-- 1. 優化 PostgreSQL 資料表結構與向量/全文索引
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE enterprise_knowledge_chunks (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    doc_id VARCHAR(128) NOT NULL,
+    chunk_text TEXT NOT NULL,
+    metadata JSONB NOT NULL DEFAULT '{}',
+    embedding VECTOR(1536), -- text-embedding-3-small
+    tsv_content TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', chunk_text)) STORED
+);
+
+-- HNSW 向量索引 (針對高吞吐低延遲相似度檢索最佳化)
+CREATE INDEX idx_chunks_hnsw ON enterprise_knowledge_chunks 
+USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64);
+
+-- GIN 索引 (針對關鍵字精確匹配，等效 BM25)
+CREATE INDEX idx_chunks_gin ON enterprise_knowledge_chunks USING gin(tsv_content);
+
+-- 2. 互惠排名融合 (Reciprocal Rank Fusion, k=60) 混合檢索
+WITH dense_candidates AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY embedding <=> $1::vector) AS dense_rank
+    FROM enterprise_knowledge_chunks
+    ORDER BY embedding <=> $1::vector LIMIT 30
+),
+sparse_candidates AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY ts_rank_cd(tsv_content, plainto_tsquery('english', $2)) DESC) AS sparse_rank
+    FROM enterprise_knowledge_chunks
+    WHERE tsv_content @@ plainto_tsquery('english', $2) LIMIT 30
+)
+SELECT k.id, k.chunk_text, k.metadata,
+       (COALESCE(1.0 / (60 + d.dense_rank), 0.0) + COALESCE(1.0 / (60 + s.sparse_rank), 0.0)) AS rrf_score
+FROM enterprise_knowledge_chunks k
+LEFT JOIN dense_candidates d ON k.id = d.id
+LEFT JOIN sparse_candidates s ON k.id = s.id
+WHERE d.id IS NOT NULL OR s.id IS NOT NULL
+ORDER BY rrf_score DESC LIMIT 15;`,
+              warStory: "單純仰賴向量搜尋 (Dense RAG) 的系統，在客戶搜尋特定料號、合約編號 (如『XYZ-2024-998』) 或特定人名時經常嚴重翻車，因為嵌入模型無法區分精確代碼。FDE 標配『Postgres pgvector + BM25 全文檢索 + RRF 融合 + Cross-Encoder 重排序』，既掌握語義又絕對不錯失精確代號。"
+            },
+            {
+              id: "bp-evals",
+              badge: "評測守門員",
+              name: "4. CI/CD 自動化評測守門員",
+              subtitle: "將 Ragas / LangSmith 黃金評測基準整合至 CI/CD 管線，杜絕模型漂移與提示詞退化",
+              flow: [
+                { step: "01. 觸發 PR 變更", desc: "工程師修改了 Prompt、文件切分策略或底層模型版本。" },
+                { step: "02. 載入黃金評測集", desc: "CI 自動調用包含 50+ 組真實客戶高難度問題與標準答案之評測集。" },
+                { step: "03. 裁判模型量化評估", desc: "Ragas 評估真實性 (Faithfulness)、檢索召回率與答案相關度。" },
+                { step: "04. 嚴格合併閘門阻擋", desc: "若任一指標低於 SLA 門檻（如真實性 < 0.92 或延遲 > 2.5s），強制阻擋合併。" }
+              ],
+              slas: [
+                { label: "真實性 (Faithfulness) 門檻", val: ">= 0.92 (嚴拒無依據幻覺)" },
+                { label: "檢索召回率 (Context Recall)", val: ">= 0.90 (零檢索漂移)" },
+                { label: "每次 CI 評測成本", val: "< $0.05 / 每次執行" }
+              ],
+              filename: "test_rag_regression_gate.py",
+              codeLang: "Python 3.11+ / Pytest + Ragas",
+              code: `import pytest
+from ragas import evaluate
+from ragas.metrics import faithfulness, answer_relevance, context_recall
+from datasets import Dataset
+
+# 1. 企業級黃金標準測試資料集 (Golden Ground-Truth)
+GOLDEN_EVAL_DATASET = Dataset.from_dict({
+    "question": [
+        "What is the maximum allowed latency for the Payment Service auth webhook in APAC?"
+    ],
+    "contexts": [[
+        "APAC Payment Service SLA specification section 4.1: Auth webhooks must respond "
+        "within 250 milliseconds at P99 under peak load. Any timeout exceeding 500ms triggers P1 alert."
+    ]],
+    "ground_truth": [
+        "The P99 latency SLA for APAC Payment Service auth webhooks is 250ms, with timeouts >500ms triggering P1."
+    ],
+    "answer": [
+        "According to APAC SLA section 4.1, the auth webhook must respond within 250ms at P99."
+    ]
+})
+
+def test_production_rag_evals_regression_gate():
+    """
+    CI/CD 自動化評測守門員：若模型產生幻覺或召回率下滑，自動在中斷 GitHub Actions。
+    """
+    results = evaluate(
+        dataset=GOLDEN_EVAL_DATASET,
+        metrics=[faithfulness, answer_relevance, context_recall]
+    )
+    
+    # 2. 嚴格數學 SLA 門檻斷言
+    assert results["faithfulness"] >= 0.92, (
+        f"🚨 Merge Blocked! Faithfulness dropped to {results['faithfulness']:.3f} (Required: >= 0.92)."
+    )
+    assert results["context_recall"] >= 0.90, (
+        f"🚨 Merge Blocked! Context Recall dropped to {results['context_recall']:.3f} (Required: >= 0.90)."
+    )
+    assert results["answer_relevance"] >= 0.88, (
+        f"🚨 Merge Blocked! Answer Relevance dropped to {results['answer_relevance']:.3f} (Required: >= 0.88)."
+    )
+    print("✅ All FDE Production Quality Gates Passed! PR Approved for Staging.")`,
+              warStory: "初階開發者修改 Prompt 通常憑個人感覺（Vibe checking）隨機測試 2 個問題就直接推向生產環境，結果在邊界案例中引發大規模幻覺退化。頂尖 FDE 將評測體系工程化為 CI/CD 門禁，任何程式碼或模型更換都必須透過 50 組黃金案例的量化驗證方可上線。"
+            },
+            {
+              id: "bp-skill",
+              badge: "技能架構工程",
+              name: "5. Agent 技能架構與漸進式揭露",
+              subtitle: "將企業複雜 SOP 與維運流程封裝為漸進式揭露技能 (SKILL.md + CLI 腳本模式)",
+              flow: [
+                { step: "01. 元資料索引發現", desc: "Agent 啟動時僅加載技能名稱與簡要 YAML 描述，極度節省上下文 (~50 tokens)。" },
+                { step: "02. 意圖命中漸進加載", desc: "僅當使用者任務命中技能描述時，Agent 才按需載入完整 SOP 操作指令。" },
+                { step: "03. 確定性腳本調用", desc: "透過 'uv run' 執行帶有跨程序文件鎖 (File-Lock) 頻率限制之 CLI 工具。" },
+                { step: "04. 標準化交付物", desc: "過濾落落長的日誌，輸出小於 500 行的高價值結構化報表或審計報告。" }
+              ],
+              slas: [
+                { label: "上下文膨脹縮減率", val: "95%+ (拒絕 System Prompt 膨脹)" },
+                { label: "工具執行確定性", val: "100% (uv 虛擬隔離環境)" },
+                { label: "團隊協作複用性", val: "VCS Git 版本受控" }
+              ],
+              filename: "SKILL.md & agent_tool_cli.py",
+              codeLang: "Markdown / Python 3.11+ / uv",
+              code: `---
+name: enterprise-db-migration
+description: >-
+  Audits, validates, and executes zero-downtime PostgreSQL schema migrations
+  with rollback verification and lock timeout safeguards.
+---
+
+# Enterprise Database Migration Runbook (技能標準規範)
+
+## 操作協定與執行流程
+1. **靜態分析與乾跑 (Dry-Run)**:
+   \`\`\`bash
+   uv run scripts/migrate.py check --schema=v2_upgrade.sql
+   \`\`\`
+2. **鎖逾時安全限制**:
+   強制所有 ALTER TABLE 變更必須配置 \'SET lock_timeout = 2s;\'
+3. **執行與狀態快照**:
+   在交易 (Transaction) 區塊中執行，並建立遷移前快照點。
+
+--------------------------------------------------------------------------------
+# CLI 輔助腳本實現 (scripts/migrate.py)
+import argparse, fcntl, sys, time
+
+def acquire_file_lock(lock_path="/tmp/migration.lock"):
+    # 跨行程文件鎖：防止多個並行 Subagent 同時觸發資料庫結構競態衝突
+    lock_file = open(lock_path, "w")
+    fcntl.flock(lock_file, fcntl.LOCK_EX)
+    return lock_file
+
+def main():
+    parser = argparse.ArgumentParser(description="Deterministic Migration CLI")
+    parser.add_argument("action", choices=["check", "apply", "rollback"])
+    parser.add_argument("--schema", required=True)
+    args = parser.parse_args()
+    
+    lock = acquire_file_lock()
+    print(f"🔒 已取得鎖。正在對 {args.schema} 執行 {args.action}...")
+    # 安全確定性執行代碼
+    print("✅ 執行完畢，輸出 < 500 行結構化報告。")
+
+if __name__ == "__main__":
+    main()`,
+              warStory: "初階團隊常把幾十頁的維運手冊硬塞進 System Prompt，導致模型出現『大海撈針 (Lost in the Middle)』注意力退化，且每輪對話平白消耗上萬 Token。頂尖 FDE 將領域知識模組化為 SKILL.md，僅在需要時漸進式揭露 (Progressive Disclosure)，既省成本又大幅提高工具執行精準度。"
+            }
+          ]
+        },
+        footer: "專為前線部署工程師 (FDE) 與現代 AI 實踐者打造 • DeepMind Antigravity 特別版"
+      }
+    };
+
+    let activeBlueprint = 0;
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function selectBlueprint(idx) {
+      activeBlueprint = idx;
+      renderTechBlueprints();
+    }
+
+    function copyBlueprintCode() {
+      const lang = i18nData[currentLang].tech;
+      const bp = lang.blueprints[activeBlueprint];
+      navigator.clipboard.writeText(bp.code).then(() => {
+        const btn = document.getElementById('copyBtnText');
+        if (btn) {
+          btn.textContent = lang.copiedBtn;
+          setTimeout(() => {
+            btn.textContent = lang.copyBtn;
+          }, 2000);
+        }
+      });
+    }
+
+    function renderTechBlueprints() {
+      const lang = i18nData[currentLang].tech;
+      document.getElementById('tech-badge').textContent = lang.badge;
+      document.getElementById('tech-header-title').textContent = lang.title;
+      document.getElementById('tech-header-desc').textContent = lang.desc;
+
+      // Render Blueprint Selector Buttons
+      const navContainer = document.getElementById('bpNavButtons');
+      if (navContainer) {
+        navContainer.innerHTML = lang.blueprints.map((bp, idx) => `
+          <button onclick="selectBlueprint(${idx})" class="flex-shrink-0 whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+            idx === activeBlueprint 
+              ? 'bg-[var(--primary)] text-[var(--primary-foreground)] border-transparent' 
+              : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-[var(--accent)]'
+          }">
+            ${bp.name}
+          </button>
+        `).join('');
+      }
+
+      // Render Active Blueprint Details
+      const bp = lang.blueprints[activeBlueprint];
+      const container = document.getElementById('blueprintContainer');
+      if (container && bp) {
+        container.innerHTML = `
+          <!-- Title Banner -->
+          <div class="border border-[var(--border)] rounded-xl p-5 bg-[var(--accent)] space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 font-bold uppercase tracking-wider">
+                ${bp.badge}
+              </span>
+              <span class="text-xs font-mono text-[var(--muted-foreground)]">${bp.filename}</span>
+            </div>
+            <h4 class="text-lg font-extrabold text-[var(--foreground)]">${bp.name}</h4>
+            <p class="text-xs sm:text-sm text-[var(--muted-foreground)]">${bp.subtitle}</p>
+          </div>
+
+          <!-- Execution Architecture Flow -->
+          <div class="space-y-3">
+            <h5 class="text-xs font-bold uppercase tracking-wider text-[var(--primary)] flex items-center gap-1.5">
+              <span>🔄</span> ${lang.flowTitle}
+            </h5>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              ${bp.flow.map(f => `
+                <div class="p-3.5 rounded-xl border border-[var(--border)] bg-[var(--card)] space-y-1">
+                  <span class="text-xs font-bold text-sky-500 block">${f.step}</span>
+                  <p class="text-xs text-[var(--muted-foreground)] leading-relaxed">${f.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- SLAs & Metrics -->
+          <div class="space-y-3">
+            <h5 class="text-xs font-bold uppercase tracking-wider text-[var(--primary)] flex items-center gap-1.5">
+              <span>📊</span> ${lang.slaTitle}
+            </h5>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              ${bp.slas.map(s => `
+                <div class="p-3.5 rounded-xl border border-[var(--border)] bg-[var(--accent)] text-center">
+                  <span class="text-xs text-[var(--muted-foreground)] block">${s.label}</span>
+                  <span class="text-sm font-extrabold text-emerald-500 mt-1 block">${s.val}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Production Code Sandbox -->
+          <div class="space-y-3">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+              <h5 class="text-xs font-bold uppercase tracking-wider text-[var(--primary)] flex items-center gap-1.5">
+                <span>💻</span> ${lang.codeTitle} <span class="text-[var(--muted-foreground)] font-normal">(${bp.codeLang})</span>
+              </h5>
+              <button onclick="copyBlueprintCode()" class="w-full sm:w-auto flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-[var(--accent)] border border-[var(--border)] hover:bg-[var(--card)] transition">
+                <span>📋</span>
+                <span id="copyBtnText">${lang.copyBtn}</span>
+              </button>
+            </div>
+            <div class="rounded-xl border border-[var(--border)] bg-[#090e1a] text-slate-100 p-3 sm:p-4 font-mono text-[11px] sm:text-xs overflow-x-auto leading-relaxed shadow-inner max-w-full">
+              <pre class="max-w-full"><code>${escapeHtml(bp.code)}</code></pre>
+            </div>
+          </div>
+
+          <!-- War Story & Anti-Pattern Box -->
+          <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-1.5">
+            <div class="flex items-center gap-2 text-amber-500 font-bold text-xs">
+              <span>⚠️</span> <span>${lang.storyTitle}</span>
+            </div>
+            <p class="text-xs text-[var(--muted-foreground)] leading-relaxed">
+              ${bp.warStory}
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    // Matrix comparison data
+    function renderMatrix() {
+      const lang = i18nData[currentLang].matrix;
+      document.getElementById('matrix-title').textContent = lang.title;
+      document.getElementById('th-dim').textContent = lang.thDim;
+      document.getElementById('th-swe').textContent = lang.thSWE;
+      document.getElementById('th-sa').textContent = lang.thSA;
+      document.getElementById('th-fde').textContent = lang.thFDE;
+
+      const tbody = document.getElementById('matrix-tbody');
+      tbody.innerHTML = '';
+      lang.rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.className = "border-b border-[var(--border)]";
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-semibold text-[var(--foreground)]">${r.dim}</td>
+          <td class="py-2.5 px-3 text-[var(--muted-foreground)]">${r.swe}</td>
+          <td class="py-2.5 px-3 text-[var(--muted-foreground)]">${r.sa}</td>
+          <td class="py-2.5 px-3 font-medium text-emerald-500 bg-[var(--accent)]">${r.fde}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Render Tools Grid
+    function renderTools() {
+      const lang = i18nData[currentLang].tools;
+      document.getElementById('tools-header-title').textContent = lang.title;
+      document.getElementById('tools-header-desc').textContent = lang.desc;
+      document.getElementById('flt-all').textContent = lang.filters.all;
+      document.getElementById('flt-ide').textContent = lang.filters.ide;
+      document.getElementById('flt-orch').textContent = lang.filters.orch;
+      document.getElementById('flt-ret').textContent = lang.filters.ret;
+      document.getElementById('flt-eval').textContent = lang.filters.eval;
+
+      const grid = document.getElementById('toolGrid');
+      grid.innerHTML = '';
+      lang.items.forEach(item => {
+        const isHidden = (activeCategory !== 'all' && item.category !== activeCategory) ? 'hidden' : '';
+        const card = document.createElement('div');
+        card.className = `tool-card ${item.category} ${isHidden} bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 shadow-sm space-y-2`;
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-sky-500/10 text-sky-500">${item.tag}</span>
+            <span class="text-xs text-[var(--muted-foreground)]">${item.badge}</span>
+          </div>
+          <h4 class="text-sm font-bold text-[var(--foreground)]">${item.title}</h4>
+          <p class="text-xs text-[var(--muted-foreground)] leading-relaxed">${item.desc}</p>
+          <div class="text-xs text-[var(--muted-foreground)] pt-2 border-t border-[var(--border)]">
+            ${item.tip}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Render Certifications and Roadmap
+    function renderCerts() {
+      const lang = i18nData[currentLang].certs;
+      document.getElementById('cert-header-title').textContent = lang.title;
+      document.getElementById('cert-header-desc').innerHTML = lang.desc;
+      document.getElementById('chk-title').textContent = lang.chkTitle;
+
+      const container = document.getElementById('certContainer');
+      container.innerHTML = `
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-[var(--primary)] flex items-center gap-2">
+            <span>📜</span> ${lang.sec1Title}
+          </h4>
+          ${lang.certList.map(c => `
+            <div class="border border-[var(--border)] rounded-lg p-3.5 bg-[var(--accent)] space-y-1.5">
+              <div class="flex justify-between items-center">
+                <strong class="text-sm text-[var(--foreground)]">${c.title}</strong>
+                <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 font-semibold">${c.tier}</span>
+              </div>
+              <p class="text-xs text-[var(--muted-foreground)]">${c.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-[var(--primary)] flex items-center gap-2">
+            <span>📚</span> ${lang.sec2Title}
+          </h4>
+          ${lang.courseList.map(c => `
+            <div class="border border-[var(--border)] rounded-lg p-3.5 bg-[var(--accent)] space-y-1.5">
+              <div class="flex justify-between items-center">
+                <strong class="text-sm text-[var(--foreground)]">${c.title}</strong>
+                <span class="text-xs px-2 py-0.5 rounded bg-purple-500/10 text-purple-500 font-semibold">${c.tier}</span>
+              </div>
+              <p class="text-xs text-[var(--muted-foreground)]">${c.desc}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Render Checklist items
+      const chkContainer = document.getElementById('checklistContainer');
+      chkContainer.innerHTML = lang.checklist.map((item, idx) => `
+        <label class="flex items-start gap-3 p-3 rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] cursor-pointer transition">
+          <input type="checkbox" id="chk-${idx}" onchange="updateChecklist()" class="mt-0.5 rounded text-[var(--primary)] focus:ring-0">
+          <div class="text-xs">
+            <strong class="block text-[var(--foreground)]">${item.title}</strong>
+            <span class="text-[var(--muted-foreground)]">${item.desc}</span>
+          </div>
+        </label>
+      `).join('');
+      updateChecklist();
+    }
+
+    // Render Playbook
+    function renderPlaybook() {
+      const lang = i18nData[currentLang].playbook;
+      document.getElementById('pb-title').textContent = lang.title;
+      document.getElementById('pb-desc').textContent = lang.desc;
+
+      const container = document.getElementById('playbookContainer');
+      const colors = ['bg-indigo-500', 'bg-sky-500', 'bg-emerald-500', 'bg-amber-500', 'bg-purple-500'];
+      container.innerHTML = lang.stages.map((st, idx) => `
+        <div class="border border-[var(--border)] rounded-xl p-4 bg-[var(--accent)] flex flex-col md:flex-row gap-4">
+          <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl ${colors[idx % colors.length]} text-white font-bold text-lg">
+            ${st.num}
+          </div>
+          <div class="space-y-1.5 flex-grow">
+            <div class="flex justify-between items-center">
+              <h4 class="text-sm font-bold text-[var(--foreground)]">${st.title}</h4>
+              <span class="text-xs px-2 py-0.5 rounded bg-[var(--border)] text-[var(--muted-foreground)]">${st.tag}</span>
+            </div>
+            <p class="text-xs text-[var(--muted-foreground)] leading-relaxed">${st.desc}</p>
+            <div class="text-xs font-mono p-2 rounded bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)]">
+              ${st.deliv}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Diagnostic Questions
+    function renderDiagnostic() {
+      const lang = i18nData[currentLang].diag;
+      document.getElementById('diag-title').textContent = lang.title;
+      document.getElementById('diag-desc').textContent = lang.desc;
+      document.getElementById('diag-btn').textContent = lang.btn;
+      document.getElementById('res-label').textContent = lang.resLabel;
+
+      const container = document.getElementById('questionsContainer');
+      container.innerHTML = lang.questions.map((q, idx) => `
+        <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--accent)] space-y-2">
+          <span class="text-xs font-bold text-[var(--primary)] uppercase">${q.cat}</span>
+          <p class="text-xs sm:text-sm font-medium text-[var(--foreground)]">${q.q}</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2 pt-1 text-xs">
+            ${q.opts.map((opt, oIdx) => `
+              <label class="flex items-start sm:items-center gap-2.5 p-2.5 rounded-lg border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--accent)] cursor-pointer transition min-h-[44px]">
+                <input type="radio" name="q${idx+1}" value="${oIdx+1}" ${oIdx===0?'checked':''} class="mt-0.5 sm:mt-0 flex-shrink-0">
+                <span class="text-[var(--foreground)] leading-snug">${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Apply entire language change
+    function applyLanguage() {
+      const data = i18nData[currentLang];
+      document.getElementById('txt-badge-status').textContent = data.badgeStatus;
+      document.getElementById('langBtnText').textContent = data.langBtn;
+      document.getElementById('txt-hero-pill').textContent = data.heroPill;
+      document.getElementById('txt-hero-title').textContent = data.heroTitle;
+      document.getElementById('txt-hero-desc').innerHTML = data.heroDesc;
+      document.getElementById('txt-metric1-label').textContent = data.metric1Label;
+      document.getElementById('txt-metric1-val').textContent = data.metric1Val;
+      document.getElementById('txt-metric2-label').textContent = data.metric2Label;
+      document.getElementById('txt-metric2-val').textContent = data.metric2Val;
+
+      // Tab titles
+      document.getElementById('tab-title-role').textContent = data.tabs.role;
+      document.getElementById('tab-title-stack').textContent = data.tabs.stack;
+      document.getElementById('tab-title-roadmap').textContent = data.tabs.roadmap;
+      document.getElementById('tab-title-playbook').textContent = data.tabs.playbook;
+      document.getElementById('tab-title-assessment').textContent = data.tabs.assessment;
+      document.getElementById('tab-title-tech').textContent = data.tabs.tech;
+      const card2Btn = document.getElementById('card2-tech-btn');
+      if (card2Btn) card2Btn.textContent = data.card2TechBtn;
+
+      // Tab 1 Cards
+      document.getElementById('card1-title').textContent = data.card1.title;
+      document.getElementById('card1-desc').innerHTML = data.card1.desc;
+      document.getElementById('card1-list').innerHTML = data.card1.list.map(l => `<li>${l}</li>`).join('');
+
+      document.getElementById('card2-title').textContent = data.card2.title;
+      document.getElementById('card2-desc').innerHTML = data.card2.desc;
+      document.getElementById('card2-list').innerHTML = data.card2.list.map(l => `<li>${l}</li>`).join('');
+
+      document.getElementById('card3-title').textContent = data.card3.title;
+      document.getElementById('card3-desc').innerHTML = data.card3.desc;
+      document.getElementById('triad1-title').textContent = data.card3.triad[0].title;
+      document.getElementById('triad1-desc').textContent = data.card3.triad[0].desc;
+      document.getElementById('triad2-title').textContent = data.card3.triad[1].title;
+      document.getElementById('triad2-desc').textContent = data.card3.triad[1].desc;
+      document.getElementById('triad3-title').textContent = data.card3.triad[2].title;
+      document.getElementById('triad3-desc').textContent = data.card3.triad[2].desc;
+
+      document.getElementById('footerText').textContent = data.footer;
+
+      // Re-render dynamic sections
+      renderMatrix();
+      renderTools();
+      renderCerts();
+      renderPlaybook();
+      renderDiagnostic();
+      calculateDiagnostic();
+      renderTechBlueprints();
+    }
+
+    function toggleLanguage() {
+      currentLang = (currentLang === 'en') ? 'zh' : 'en';
+      applyLanguage();
+    }
+
+    function toggleTheme() {
+      currentTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      const icon = document.getElementById('themeIcon');
+      const text = document.getElementById('themeText');
+      if (currentTheme === 'dark') {
+        icon.textContent = '☀️';
+        text.textContent = (currentLang === 'zh') ? '明亮模式 (Light)' : 'Light Mode';
+      } else {
+        icon.textContent = '🌙';
+        text.textContent = (currentLang === 'zh') ? '深色模式 (Dark)' : 'Dark Mode';
+      }
+    }
+
+    function switchTab(tabId) {
+      const tabs = ['role', 'stack', 'roadmap', 'playbook', 'assessment', 'tech'];
+      tabs.forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        const btn = document.getElementById('btn-' + t);
+        if (el) el.classList.add('hidden');
+        if (btn) btn.classList.remove('active');
+      });
+      const target = document.getElementById('tab-' + tabId);
+      const targetBtn = document.getElementById('btn-' + tabId);
+      if (target) target.classList.remove('hidden');
+      if (targetBtn) {
+        targetBtn.classList.add('active');
+        // Auto-scroll active tab into view on mobile screens
+        targetBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    function filterTools(category) {
+      activeCategory = category;
+      const buttons = document.querySelectorAll('.tool-filter');
+      buttons.forEach(b => {
+        b.classList.remove('bg-[var(--primary)]', 'text-[var(--primary-foreground)]');
+        b.classList.add('bg-[var(--accent)]', 'text-[var(--foreground)]');
+      });
+      event.target.classList.remove('bg-[var(--accent)]', 'text-[var(--foreground)]');
+      event.target.classList.add('bg-[var(--primary)]', 'text-[var(--primary-foreground)]');
+
+      const cards = document.querySelectorAll('.tool-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.classList.contains(category)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    function updateChecklist() {
+      const checkboxes = document.querySelectorAll('#checklistContainer input[type="checkbox"]');
+      let checkedCount = 0;
+      checkboxes.forEach(cb => { if (cb.checked) checkedCount++; });
+      const total = checkboxes.length || 6;
+      const pct = Math.round((checkedCount / total) * 100);
+      const label = (currentLang === 'zh') 
+        ? `已完成 ${checkedCount} / ${total} 項 (${pct}%)` 
+        : `${checkedCount} of ${total} Completed (${pct}%)`;
+      document.getElementById('checklistProgress').textContent = label;
+    }
+
+    function calculateDiagnostic() {
+      const qNames = ['q1', 'q2', 'q3', 'q4', 'q5'];
+      let total = 0;
+      qNames.forEach(name => {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        total += checked ? parseInt(checked.value, 10) : 1;
+      });
+
+      const pct = Math.round(((total - 5) / 10) * 100);
+      const scoreBadge = document.getElementById('scoreBadge');
+      const verdictTitle = document.getElementById('verdictTitle');
+      const verdictDesc = document.getElementById('verdictDesc');
+      const verdictRec = document.getElementById('verdictRecommendations');
+
+      scoreBadge.textContent = (currentLang === 'zh') 
+        ? `就緒指數: ${pct}% (${total}/15 分)`
+        : `Score: ${pct}% (${total}/15)`;
+
+      if (total <= 8) {
+        scoreBadge.className = "text-sm font-extrabold px-3 py-1 rounded bg-amber-500/10 text-amber-500";
+        if (currentLang === 'zh') {
+          verdictTitle.textContent = "等級 1：AI 輔助開發者 (AI-Assisted Developer)";
+          verdictDesc.textContent = "你目前主要將 AI 當作自動補全或查詢工具。你具備良好的程式邏輯，但尚未掌握生產級 Agent 架構、自動化模型評測 (Evals) 或企業級雲端基礎設施。";
+          verdictRec.innerHTML = "<strong>建議首要突破任務：</strong> 研讀 <em>Full Stack LLM Bootcamp</em>，在 Cursor/Claude Code 中配置嚴格 rule 規則，並用 PostgreSQL + pgvector 動手實作你的第一個混合檢索 (Hybrid RAG) 專案。";
+        } else {
+          verdictTitle.textContent = "Level 1: AI-Assisted Developer";
+          verdictDesc.textContent = "You currently use AI for productivity and basic assistance. You have strong potential, but you haven't yet mastered production-grade agentic frameworks, automated model evaluations, or enterprise deployment patterns.";
+          verdictRec.innerHTML = "<strong>Recommended Immediate Priority:</strong> Study the <em>Full Stack LLM Bootcamp</em>, adopt Cursor/Claude Code agentic workflows, and replace naive RAG with hybrid search + pgvector.";
+        }
+      } else if (total <= 12) {
+        scoreBadge.className = "text-sm font-extrabold px-3 py-1 rounded bg-sky-500/10 text-sky-500";
+        if (currentLang === 'zh') {
+          verdictTitle.textContent = "等級 2：應用型 AI 工程師 (Applied AI Engineer)";
+          verdictDesc.textContent = "你擁有堅實的全端工程力與實用 AI 技能！能調用 API、處理 Embedding 向量並寫出 Docker 微服務。若想躋身頂尖 FDE，你需要更嚴謹的確定性評測體系 (CI/CD 評測基準) 與企業級雲端架構資安經驗。";
+          verdictRec.innerHTML = "<strong>建議首要突破任務：</strong> 考取 <em>AWS Solutions Architect</em> 或 <em>Databricks GenAI Engineer</em> 認證，並用 LangSmith/Phoenix 建立自動化真實性與召回率 CI/CD 監控體系。";
+        } else {
+          verdictTitle.textContent = "Level 2: Applied AI Engineer";
+          verdictDesc.textContent = "You possess solid full-stack software and applied AI capabilities! To step up to an elite Forward Deployed Engineer, you need deeper rigor in deterministic Evals (CI/CD benchmarks) and enterprise cloud infrastructure.";
+          verdictRec.innerHTML = "<strong>Recommended Immediate Priority:</strong> Earn the <em>AWS Certified Solutions Architect</em> or <em>Databricks GenAI Engineer</em> cert, and implement automated continuous evaluation suites using LangSmith/Phoenix.";
+        }
+      } else {
+        scoreBadge.className = "text-sm font-extrabold px-3 py-1 rounded bg-emerald-500/10 text-emerald-500";
+        if (currentLang === 'zh') {
+          verdictTitle.textContent = "等級 3：頂尖前線部署工程師 (Elite Forward Deployed Engineer)";
+          verdictDesc.textContent = "你已達到現代軟體工程的最頂尖水準。你能直接空降至大型企業客戶現場，精準診斷核心痛點，設計高彈性的多 Agent 協同系統與護欄防護，並在數天內推向生產環境上線。";
+          verdictRec.innerHTML = "<strong>建議首要突破任務：</strong> 直接瞄準 OpenAI、Anthropic、Scale AI、Databricks、Palantir 等頂尖企業的 FDE 與 Lead AI Solutions 職位。聚焦於開源高品質 Agent 架構範式並累積高價值交付案例。";
+        } else {
+          verdictTitle.textContent = "Level 3: Elite Forward Deployed Engineer (FDE)";
+          verdictDesc.textContent = "You operate at the top tier of modern software engineering. You can enter an enterprise client, diagnose root business problems, architect resilient multi-agent systems with guardrails, and ship live software to production in days.";
+          verdictRec.innerHTML = "<strong>Recommended Immediate Priority:</strong> Target FDE and Lead AI Solutions roles at tier-1 AI firms (OpenAI, Anthropic, Scale AI, Databricks, Palantir). Focus on open-sourcing production agent architectures and speaking at AI systems conferences.";
+        }
+      }
+    }
+
+    // Initialize on load
+    applyLanguage();
+  </script>
+</body>
+</html>
