@@ -554,6 +554,35 @@
           </div>
         </div>
 
+        <!-- Real-world Practical Project Card: AI Code Reviewer -->
+        <div class="p-5 rounded-xl border border-indigo-500/30 bg-gradient-to-r from-indigo-500/10 via-purple-500/5 to-transparent space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 mb-1">
+                <span>🤖</span> <span id="reviewer-badge">Direct Practical Learning Project</span>
+              </div>
+              <h4 id="reviewer-title" class="text-base font-bold text-[var(--foreground)]">AI Code Reviewer & PR Security Auditor (`practical_examples/ai_code_reviewer`)</h4>
+              <p id="reviewer-desc" class="text-xs text-[var(--muted-foreground)]">A real developer tool you can run directly on any Python file or Git diff on your computer. Combines AST syntax scanning, team Markdown rules RAG, and Gemini LLM structured review.</p>
+            </div>
+            <a href="https://github.com/SinLiongToo/fde-ai-swe-masterclass/tree/main/practical_examples/ai_code_reviewer/LEARNING_GUIDE.md" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white transition whitespace-nowrap flex items-center gap-1">
+              <span>📖</span> <span id="reviewer-guide-btn">View Step-by-Step Learning Guide</span>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] space-y-1.5">
+              <span id="reviewer-card1-title" class="font-bold text-rose-400">🚨 Test on Vulnerable Sample (Catches 5 Real Flaws):</span>
+              <pre class="font-mono text-[11px] p-2 rounded bg-[#090e1a] text-slate-200 overflow-x-auto"><code>python -m practical_examples.ai_code_reviewer.cli practical_examples/ai_code_reviewer/samples/vulnerable_api.py</code></pre>
+              <span id="reviewer-card1-desc" class="text-[11px] text-[var(--muted-foreground)]">Catches: SQL injection (f-strings), hardcoded secrets, missing request timeouts, dangerous eval(), destructive table drop.</span>
+            </div>
+            <div class="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] space-y-1.5">
+              <span id="reviewer-card2-title" class="font-bold text-emerald-400">✔ Test on Clean Reference Sample (100% Passed):</span>
+              <pre class="font-mono text-[11px] p-2 rounded bg-[#090e1a] text-slate-200 overflow-x-auto"><code>python -m practical_examples.ai_code_reviewer.cli practical_examples/ai_code_reviewer/samples/clean_api.py</code></pre>
+              <span id="reviewer-card2-desc" class="text-[11px] text-[var(--muted-foreground)]">Verifies: Parameterized SQL, os.getenv secrets, timeout=5.0, safe AST parsing. Zero vulnerabilities found.</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Terminal Quickstart Card -->
         <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)] space-y-2">
           <div class="flex items-center justify-between">
@@ -567,10 +596,10 @@
             git clone https://github.com/SinLiongToo/fde-ai-swe-masterclass.git<br>
             cd fde-ai-swe-masterclass<br>
             pip install pydantic pytest rich<br><br>
-            # 2. Run Interactive Terminal Exercise Runner<br>
-            python -m exercises.fde_enterprise_lab.main<br><br>
+            # 2. Run Practical AI Code Reviewer on any Python file<br>
+            python -m practical_examples.ai_code_reviewer.cli<br><br>
             # 3. Run Automated CI/CD Regression Test Suite<br>
-            python -m pytest exercises/fde_enterprise_lab/test_eval_gate.py -v
+            python -m pytest practical_examples/ai_code_reviewer/test_reviewer.py -v
           </div>
         </div>
       </div>
@@ -1081,7 +1110,17 @@ if __name__ == "__main__":
             desc: "Run statistical regression gates in real-time, asserting strict SLAs on Recall (>= 88%), Faithfulness (>= 90%), and P99 Latency (< 2500ms).",
             runBtn: "Run Pytest CI/CD Regression Suite"
           },
-          localTitle: "Run On Your Local Machine (Zero Third-Party API Key Required)"
+          localTitle: "Run On Your Local Machine (Zero Third-Party API Key Required)",
+          reviewer: {
+            badge: "Direct Practical Learning Project",
+            title: "AI Code Reviewer & PR Security Auditor (`practical_examples/ai_code_reviewer`)",
+            desc: "A real developer tool you can run directly on any Python file or Git diff on your computer. Combines AST syntax scanning, team Markdown rules RAG, and Gemini LLM structured review.",
+            guideBtn: "View Step-by-Step Learning Guide",
+            card1Title: "🚨 Test on Vulnerable Sample (Catches 5 Real Flaws):",
+            card1Desc: "Catches: SQL injection (f-strings), hardcoded secrets, missing request timeouts, dangerous eval(), destructive table drop.",
+            card2Title: "✔ Test on Clean Reference Sample (100% Passed):",
+            card2Desc: "Verifies: Parameterized SQL, os.getenv secrets, timeout=5.0, safe AST parsing. Zero vulnerabilities found."
+          }
         },
         footer: "Built for Forward Deployed Engineers & Modern AI Practitioners • DeepMind Antigravity Edition"
       },
@@ -1577,7 +1616,17 @@ if __name__ == "__main__":
             desc: "即時執行統計評測基準，對召回率 (>= 88%)、真實性 (>= 90%) 及 P99 延遲 (< 2500ms) 進行嚴格的代碼合併防禦驗證。",
             runBtn: "執行 Pytest CI/CD 自動化評測套件"
           },
-          localTitle: "在你的電腦本機端運行（零付費 API Key 依賴，開箱即跑）"
+          localTitle: "在你的電腦本機端運行（零付費 API Key 依賴，開箱即跑）",
+          reviewer: {
+            badge: "推薦直接實戰上手學習專案",
+            title: "AI 程式碼審查與架構規範審計助手 (`practical_examples/ai_code_reviewer`)",
+            desc: "真正可直接拿來學習與日常使用的實用工具！可直接審查你電腦裡的任何 Python 檔案或 Git Diff。結合 AST 語法樹預檢、團隊 Markdown 規則檢索與 Gemini 大模型結構化審查。",
+            guideBtn: "查看完整逐步實戰學習指南",
+            card1Title: "🚨 審查真實漏洞靶場（精確攔截 5 大資安架構缺陷）：",
+            card1Desc: "精準攔截：f-string 拼接 SQL 注入、硬編碼 API 金鑰、HTTP 請求未設 timeout、危險 eval()、破壞性 DROP TABLE。",
+            card2Title: "✔ 審查安全合規範例（100 分滿分通過）：",
+            card2Desc: "驗證符合：參數化 SQL、os.getenv 環境變數、timeout=5.0、安全 AST 解析。0 漏洞通過 CI/CD 閘門。"
+          }
         },
         footer: "專為前線部署工程師 (FDE) 與現代 AI 實踐者打造 • DeepMind Antigravity 特別版"
       }
@@ -2101,6 +2150,25 @@ if __name__ == "__main__":
       document.getElementById('m4-desc').textContent = lang.m4.desc;
       document.getElementById('m4-run-btn').textContent = lang.m4.runBtn;
       document.getElementById('lab-local-title').textContent = lang.localTitle;
+
+      if (lang.reviewer) {
+        const revBadge = document.getElementById('reviewer-badge');
+        const revTitle = document.getElementById('reviewer-title');
+        const revDesc = document.getElementById('reviewer-desc');
+        const revBtn = document.getElementById('reviewer-guide-btn');
+        const c1Title = document.getElementById('reviewer-card1-title');
+        const c1Desc = document.getElementById('reviewer-card1-desc');
+        const c2Title = document.getElementById('reviewer-card2-title');
+        const c2Desc = document.getElementById('reviewer-card2-desc');
+        if (revBadge) revBadge.textContent = lang.reviewer.badge;
+        if (revTitle) revTitle.textContent = lang.reviewer.title;
+        if (revDesc) revDesc.textContent = lang.reviewer.desc;
+        if (revBtn) revBtn.textContent = lang.reviewer.guideBtn;
+        if (c1Title) c1Title.textContent = lang.reviewer.card1Title;
+        if (c1Desc) c1Desc.textContent = lang.reviewer.card1Desc;
+        if (c2Title) c2Title.textContent = lang.reviewer.card2Title;
+        if (c2Desc) c2Desc.textContent = lang.reviewer.card2Desc;
+      }
 
       // Initialize preset 1 if input is empty
       const valInput = document.getElementById('valInputJson');
