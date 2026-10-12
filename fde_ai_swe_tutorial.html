@@ -583,6 +583,35 @@
           </div>
         </div>
 
+        <!-- Real-world Practical Project Card 2: GCP + MCP + RAG Service -->
+        <div class="p-5 rounded-xl border border-sky-500/30 bg-gradient-to-r from-sky-500/10 via-cyan-500/5 to-transparent space-y-4">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30 mb-1">
+                <span>🌐</span> <span id="mcp-badge">GCP + MCP + RAG Cloud Native</span>
+              </div>
+              <h4 id="mcp-title" class="text-base font-bold text-[var(--foreground)]">GCP SRE Assistant over Model Context Protocol (`practical_examples/gcp_mcp_rag_service`)</h4>
+              <p id="mcp-desc" class="text-xs text-[var(--muted-foreground)]">Production architecture combining Google Cloud Run &amp; Cloud SQL with an MCP JSON-RPC stdio server and 2-stage hybrid RAG runbook retrieval.</p>
+            </div>
+            <a href="https://github.com/SinLiongToo/fde-ai-swe-masterclass/tree/main/practical_examples/gcp_mcp_rag_service/GCP_MCP_RAG_GUIDE.md" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 hover:bg-sky-700 text-white transition whitespace-nowrap flex items-center gap-1">
+              <span>📖</span> <span id="mcp-guide-btn">View GCP+MCP+RAG Guide</span>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] space-y-1.5">
+              <span id="mcp-card1-title" class="font-bold text-sky-400">⚡ Run Live SRE Diagnosis &amp; Cloud Run Scaling Remediation:</span>
+              <pre class="font-mono text-[11px] p-2 rounded bg-[#090e1a] text-slate-200 overflow-x-auto"><code>python -m practical_examples.gcp_mcp_rag_service.cli</code></pre>
+              <span id="mcp-card1-desc" class="text-[11px] text-[var(--muted-foreground)]">Diagnoses Cloud Run P99 1420ms cold starts via MCP, retrieves Runbook 001 via RRF k=60 RAG, updates scaling to 3 warm instances.</span>
+            </div>
+            <div class="p-3 rounded-lg bg-[var(--card)] border border-[var(--border)] space-y-1.5">
+              <span id="mcp-card2-title" class="font-bold text-emerald-400">🧪 Run MCP Protocol &amp; RAG Hybrid Pytest Suite:</span>
+              <pre class="font-mono text-[11px] p-2 rounded bg-[#090e1a] text-slate-200 overflow-x-auto"><code>python -m pytest practical_examples/gcp_mcp_rag_service/test_gcp_mcp_rag.py -v</code></pre>
+              <span id="mcp-card2-desc" class="text-[11px] text-[var(--muted-foreground)]">Verifies initialize handshake, tools/list discovery, tools/call execution, and hybrid RRF retrieval accuracy.</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Terminal Quickstart Card -->
         <div class="p-4 rounded-xl border border-[var(--border)] bg-[var(--card)] space-y-2">
           <div class="flex items-center justify-between">
@@ -1120,6 +1149,16 @@ if __name__ == "__main__":
             card1Desc: "Catches: SQL injection (f-strings), hardcoded secrets, missing request timeouts, dangerous eval(), destructive table drop.",
             card2Title: "✔ Test on Clean Reference Sample (100% Passed):",
             card2Desc: "Verifies: Parameterized SQL, os.getenv secrets, timeout=5.0, safe AST parsing. Zero vulnerabilities found."
+          },
+          mcp: {
+            badge: "GCP + MCP + RAG Cloud Native",
+            title: "GCP SRE Assistant over Model Context Protocol (`practical_examples/gcp_mcp_rag_service`)",
+            desc: "Production architecture combining Google Cloud Run & Cloud SQL with an MCP JSON-RPC stdio server and 2-stage hybrid RAG runbook retrieval.",
+            guideBtn: "View GCP+MCP+RAG Guide",
+            card1Title: "⚡ Run Live SRE Diagnosis & Cloud Run Scaling Remediation:",
+            card1Desc: "Diagnoses Cloud Run P99 1420ms cold starts via MCP, retrieves Runbook 001 via RRF k=60 RAG, updates scaling to 3 warm instances.",
+            card2Title: "🧪 Run MCP Protocol & RAG Hybrid Pytest Suite:",
+            card2Desc: "Verifies initialize handshake, tools/list discovery, tools/call execution, and hybrid RRF retrieval accuracy."
           }
         },
         footer: "Built for Forward Deployed Engineers & Modern AI Practitioners • DeepMind Antigravity Edition"
@@ -1626,6 +1665,16 @@ if __name__ == "__main__":
             card1Desc: "精準攔截：f-string 拼接 SQL 注入、硬編碼 API 金鑰、HTTP 請求未設 timeout、危險 eval()、破壞性 DROP TABLE。",
             card2Title: "✔ 審查安全合規範例（100 分滿分通過）：",
             card2Desc: "驗證符合：參數化 SQL、os.getenv 環境變數、timeout=5.0、安全 AST 解析。0 漏洞通過 CI/CD 閘門。"
+          },
+          mcp: {
+            badge: "GCP + MCP + RAG 雲端原生高階架構",
+            title: "基於 Model Context Protocol 的 GCP SRE 智慧維運助手 (`practical_examples/gcp_mcp_rag_service`)",
+            desc: "結合 Google Cloud Run 與 Cloud SQL 雲原生架構、標準 MCP JSON-RPC stdio 協定伺服器、以及 RRF k=60 兩階段混合檢索 RAG 維運手冊排障系統。",
+            guideBtn: "查看 GCP+MCP+RAG 架構與部屬指南",
+            card1Title: "⚡ 執行 SRE 智慧排障與 Cloud Run 自動擴展治癒：",
+            card1Desc: "透過 MCP 診斷 Cloud Run P99 1420ms 冷啟動瓶頸，經由 RRF k=60 混合 RAG 檢索 Runbook 001，自動補丁擴展至 3 處溫熱待命實例。",
+            card2Title: "🧪 執行 MCP 協定規格與 RAG 混合檢索 Pytest 套件：",
+            card2Desc: "完整驗證 initialize 握手協商、tools/list 規格發現、tools/call 安全調用及 RRF 混合檢索精準度。"
           }
         },
         footer: "專為前線部署工程師 (FDE) 與現代 AI 實踐者打造 • DeepMind Antigravity 特別版"
@@ -2168,6 +2217,25 @@ if __name__ == "__main__":
         if (c1Desc) c1Desc.textContent = lang.reviewer.card1Desc;
         if (c2Title) c2Title.textContent = lang.reviewer.card2Title;
         if (c2Desc) c2Desc.textContent = lang.reviewer.card2Desc;
+      }
+
+      if (lang.mcp) {
+        const mcpBadge = document.getElementById('mcp-badge');
+        const mcpTitle = document.getElementById('mcp-title');
+        const mcpDesc = document.getElementById('mcp-desc');
+        const mcpBtn = document.getElementById('mcp-guide-btn');
+        const m1Title = document.getElementById('mcp-card1-title');
+        const m1Desc = document.getElementById('mcp-card1-desc');
+        const m2Title = document.getElementById('mcp-card2-title');
+        const m2Desc = document.getElementById('mcp-card2-desc');
+        if (mcpBadge) mcpBadge.textContent = lang.mcp.badge;
+        if (mcpTitle) mcpTitle.textContent = lang.mcp.title;
+        if (mcpDesc) mcpDesc.textContent = lang.mcp.desc;
+        if (mcpBtn) mcpBtn.textContent = lang.mcp.guideBtn;
+        if (m1Title) m1Title.textContent = lang.mcp.card1Title;
+        if (m1Desc) m1Desc.textContent = lang.mcp.card1Desc;
+        if (m2Title) m2Title.textContent = lang.mcp.card2Title;
+        if (m2Desc) m2Desc.textContent = lang.mcp.card2Desc;
       }
 
       // Initialize preset 1 if input is empty
